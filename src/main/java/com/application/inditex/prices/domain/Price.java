@@ -1,5 +1,6 @@
-package com.application.inditex.prices.input;
+package com.application.inditex.prices.domain;
 
+import com.application.inditex.prices.persistence.PricesEntity;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -7,7 +8,7 @@ import java.util.Date;
 
 
 /**
- * Domain object for retrieving {@link com.application.inditex.prices.domain.PricesEntity}
+ * Domain object for retrieving {@link PricesEntity}
  *
  * @autor chema;
  */

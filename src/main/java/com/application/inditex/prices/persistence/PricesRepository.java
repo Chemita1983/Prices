@@ -1,7 +1,6 @@
 package com.application.inditex.prices.persistence;
 
 
-import com.application.inditex.prices.domain.PricesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

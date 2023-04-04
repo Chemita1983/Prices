@@ -1,4 +1,4 @@
-package com.application.inditex.prices.domain;
+package com.application.inditex.prices.persistence;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

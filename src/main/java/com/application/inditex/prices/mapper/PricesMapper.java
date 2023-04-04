@@ -1,7 +1,7 @@
 package com.application.inditex.prices.mapper;
 
-import com.application.inditex.prices.domain.PricesEntity;
-import com.application.inditex.prices.input.Price;
+import com.application.inditex.prices.persistence.PricesEntity;
+import com.application.inditex.prices.domain.Price;
 import com.application.inditex.prices.input.PricesDTO;
 import com.application.inditex.prices.output.PriceResponseDTO;
 import org.springframework.stereotype.Component;

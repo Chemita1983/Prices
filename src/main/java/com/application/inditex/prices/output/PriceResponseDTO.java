@@ -1,11 +1,12 @@
 package com.application.inditex.prices.output;
 
+import com.application.inditex.prices.persistence.PricesEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Class that wrapped {@link com.application.inditex.prices.domain.PricesEntity} result for response
+ * Class that wrapped {@link PricesEntity} result for response
  *
  * @author chema
  */

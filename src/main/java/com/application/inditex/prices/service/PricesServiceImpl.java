@@ -1,8 +1,8 @@
 package com.application.inditex.prices.service;
 
-import com.application.inditex.prices.domain.PricesEntity;
+import com.application.inditex.prices.persistence.PricesEntity;
 import com.application.inditex.prices.exceptions.InvalidDatesException;
-import com.application.inditex.prices.input.Price;
+import com.application.inditex.prices.domain.Price;
 import com.application.inditex.prices.input.PricesDTO;
 import com.application.inditex.prices.mapper.PricesMapper;
 import com.application.inditex.prices.output.PriceResponseDTO;

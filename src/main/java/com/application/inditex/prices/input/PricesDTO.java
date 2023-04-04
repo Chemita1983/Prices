@@ -1,11 +1,12 @@
 package com.application.inditex.prices.input;
 
 
+import com.application.inditex.prices.persistence.PricesEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * Input class for search prices {@link com.application.inditex.prices.domain.PricesEntity}
+ * Input class for search prices {@link PricesEntity}
  *
  * @author chema
  */

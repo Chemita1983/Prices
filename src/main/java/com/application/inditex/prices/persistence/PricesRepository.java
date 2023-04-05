@@ -1,25 +1,17 @@
 package com.application.inditex.prices.persistence;
 
-
+import com.application.inditex.prices.entity.PricesVO;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.List;
 
 /**
- * Persistence class for retrieving prices
+ * Jpa interface repository for manage dao operations
  *
  * @author chema
  */
 
-public interface PricesRepository extends JpaRepository<PricesVO, Integer> {
-
-    @Query(value = "SELECT * FROM PRICES p " +
-            "WHERE p.PRODUCT_ID = :productId " +
-            "AND p.BRAND_ID = :brandId " +
-            "AND p.START_DATE >= :startDate " +
-            "AND p.END_DATE <= :endDate", nativeQuery = true)
-    List<PricesVO> getPrice(Integer productId, Integer brandId, Date startDate, Date endDate);
-
+@Repository
+public interface PricesRepository extends JpaRepository<PricesVO, Integer>, PricesCustomRepository {
+    //Aquí se podría declarar el método getPricesBySearch con @Query y poner la query nativa, esto nos ahorraría 2 clases.
 }

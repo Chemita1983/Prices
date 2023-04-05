@@ -2,6 +2,7 @@ package com.application.inditex.prices.controller;
 
 import com.application.inditex.prices.exceptions.InvalidDatesException;
 import com.application.inditex.prices.input.PricesDTO;
+import com.application.inditex.prices.output.PriceResponseDTO;
 import com.application.inditex.prices.service.PricesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
+import java.util.List;
 
 
 /**
@@ -31,13 +33,13 @@ public class PricesController {
     private PricesService pricesService;
 
     @GetMapping(value = PATH_PRICES + PRODUCT_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getPrice(@PathVariable("productId") Integer productId,
-                                   @RequestParam("startDate") String startDate,
-                                   @RequestParam("endDate") String endDate,
-                                   @RequestParam("brandId") Integer brandId) throws InvalidDatesException, ParseException {
+    public ResponseEntity<List<PriceResponseDTO>> getPrice(@PathVariable("productId") Integer productId,
+                                                           @RequestParam("startDate") String startDate,
+                                                           @RequestParam("endDate") String endDate,
+                                                           @RequestParam("brandId") Integer brandId) throws InvalidDatesException, ParseException {
 
         PricesDTO searchFilter = new PricesDTO(productId, startDate, endDate, brandId);
 
-        return new ResponseEntity<>(pricesService.getPrice(searchFilter), HttpStatus.OK);
+        return new ResponseEntity<>(pricesService.getPricesByFilter(searchFilter), HttpStatus.OK);
     }
 }

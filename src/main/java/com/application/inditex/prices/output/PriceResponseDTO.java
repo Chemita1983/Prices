@@ -1,6 +1,6 @@
 package com.application.inditex.prices.output;
 
-import com.application.inditex.prices.persistence.PricesVO;
+import com.application.inditex.prices.entity.PricesVO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

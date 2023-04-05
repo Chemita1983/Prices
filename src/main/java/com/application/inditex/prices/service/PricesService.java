@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface PricesService {
 
-    List<PriceResponseDTO> getPrice(PricesDTO price) throws ParseException, InvalidDatesException;
+    List<PriceResponseDTO> getPricesByFilter(PricesDTO price) throws ParseException, InvalidDatesException;
 }

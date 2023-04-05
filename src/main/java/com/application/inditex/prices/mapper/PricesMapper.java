@@ -3,7 +3,7 @@ package com.application.inditex.prices.mapper;
 import com.application.inditex.prices.domain.Price;
 import com.application.inditex.prices.input.PricesDTO;
 import com.application.inditex.prices.output.PriceResponseDTO;
-import com.application.inditex.prices.persistence.PricesVO;
+import com.application.inditex.prices.entity.PricesVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

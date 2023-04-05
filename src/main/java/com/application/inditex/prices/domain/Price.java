@@ -1,6 +1,6 @@
 package com.application.inditex.prices.domain;
 
-import com.application.inditex.prices.persistence.PricesVO;
+import com.application.inditex.prices.entity.PricesVO;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,8 +20,6 @@ public class Price {
     private Integer productId;
 
     private Integer brandId;
-
-    private String name;
 
     private Date startDate;
 

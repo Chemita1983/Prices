@@ -1,7 +1,7 @@
 package com.application.inditex.prices.mapper;
 
 import com.application.inditex.prices.output.BrandResponseDTO;
-import com.application.inditex.prices.persistence.BrandVO;
+import com.application.inditex.prices.entity.BrandVO;
 import org.springframework.stereotype.Component;
 
 

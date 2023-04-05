@@ -1,6 +1,6 @@
 package com.application.inditex.prices.service;
 
-import com.application.inditex.prices.persistence.PricesVO;
+import com.application.inditex.prices.entity.PricesVO;
 import com.application.inditex.prices.exceptions.InvalidDatesException;
 import com.application.inditex.prices.domain.Price;
 import com.application.inditex.prices.input.PricesDTO;
@@ -31,14 +31,13 @@ public class PricesServiceImpl implements PricesService {
     private PricesRepository pricesRepository;
 
     @Override
-    public List<PriceResponseDTO> getPrice(PricesDTO priceDTO) throws ParseException, InvalidDatesException {
+    public List<PriceResponseDTO> getPricesByFilter(PricesDTO priceDTO) throws ParseException, InvalidDatesException {
 
         Price priceSearchParams = pricesMapper.convertToPrice(priceDTO);
 
         validSearchParams(priceSearchParams);
 
-        List<PricesVO> priceResult = pricesRepository.getPrice(priceSearchParams.getProductId(),
-                priceSearchParams.getBrandId(), priceSearchParams.getStartDate(), priceSearchParams.getEndDate());
+        List<PricesVO> priceResult = pricesRepository.getPriceByFilter(priceSearchParams);
 
         return pricesMapper.convertToPriceResponseDto(priceResult);
     }

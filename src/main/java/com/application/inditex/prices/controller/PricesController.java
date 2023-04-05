@@ -32,16 +32,12 @@ public class PricesController {
 
     @GetMapping(value = PATH_PRICES + PRODUCT_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getPrice(@PathVariable("productId") Integer productId,
-                                                           @RequestParam("startDate") String startDate,
-                                                           @RequestParam("endDate") String endDate,
-                                                           @RequestParam("brandId") Integer brandId)  {
+                                   @RequestParam("startDate") String startDate,
+                                   @RequestParam("endDate") String endDate,
+                                   @RequestParam("brandId") Integer brandId) throws InvalidDatesException, ParseException {
 
-        PricesDTO pricesDTO = new PricesDTO(productId, startDate, endDate, brandId);
+        PricesDTO searchFilter = new PricesDTO(productId, startDate, endDate, brandId);
 
-        try {
-            return new ResponseEntity<>(pricesService.getPrice(pricesDTO), HttpStatus.OK);
-        } catch (ParseException | InvalidDatesException pe){
-            return new ResponseEntity<>(pe.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(pricesService.getPrice(searchFilter), HttpStatus.OK);
     }
 }

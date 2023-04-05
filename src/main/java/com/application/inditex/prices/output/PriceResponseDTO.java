@@ -1,12 +1,12 @@
 package com.application.inditex.prices.output;
 
-import com.application.inditex.prices.persistence.PricesEntity;
+import com.application.inditex.prices.persistence.PricesVO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Class that wrapped {@link PricesEntity} result for response
+ * Class that wrapped {@link PricesVO} result for response
  *
  * @author chema
  */
@@ -17,7 +17,7 @@ public class PriceResponseDTO {
 
     private Integer productId;
 
-    private Integer brandId;
+    private BrandResponseDTO brand;
 
     private String startDate;
 

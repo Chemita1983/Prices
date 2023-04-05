@@ -13,13 +13,13 @@ import java.util.List;
  * @author chema
  */
 
-public interface PricesRepository extends JpaRepository<PricesEntity, Integer> {
+public interface PricesRepository extends JpaRepository<PricesVO, Integer> {
 
     @Query(value = "SELECT * FROM PRICES p " +
             "WHERE p.PRODUCT_ID = :productId " +
             "AND p.BRAND_ID = :brandId " +
             "AND p.START_DATE >= :startDate " +
             "AND p.END_DATE <= :endDate", nativeQuery = true)
-    List<PricesEntity> getPrice(Integer productId, Integer brandId, Date startDate, Date endDate);
+    List<PricesVO> getPrice(Integer productId, Integer brandId, Date startDate, Date endDate);
 
 }

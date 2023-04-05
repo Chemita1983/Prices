@@ -1,6 +1,6 @@
 package com.application.inditex.prices.service;
 
-import com.application.inditex.prices.persistence.PricesEntity;
+import com.application.inditex.prices.persistence.PricesVO;
 import com.application.inditex.prices.exceptions.InvalidDatesException;
 import com.application.inditex.prices.domain.Price;
 import com.application.inditex.prices.input.PricesDTO;
@@ -14,6 +14,12 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.util.List;
 
+
+/**
+ * Service for retrieving prices
+ *
+ * @author chema
+ */
 @Service
 @Slf4j
 public class PricesServiceImpl implements PricesService {
@@ -31,7 +37,7 @@ public class PricesServiceImpl implements PricesService {
 
         validSearchParams(priceSearchParams);
 
-        List<PricesEntity> priceResult = pricesRepository.getPrice(priceSearchParams.getProductId(),
+        List<PricesVO> priceResult = pricesRepository.getPrice(priceSearchParams.getProductId(),
                 priceSearchParams.getBrandId(), priceSearchParams.getStartDate(), priceSearchParams.getEndDate());
 
         return pricesMapper.convertToPriceResponseDto(priceResult);
@@ -41,7 +47,6 @@ public class PricesServiceImpl implements PricesService {
     private void validSearchParams(Price priceSearchParams) throws InvalidDatesException {
         // Es lo más rápido que se me ha ocurrido, había pensado implementar una validación por anotación o un chain, pero lo hice así por ahorrar tiempo.
         if (priceSearchParams.getStartDate().after(priceSearchParams.getEndDate())) {
-            log.error("ProductId: " + priceSearchParams.getProductId() + " start date : + " + priceSearchParams.getStartDate() + "must be greater than End date: " + priceSearchParams.getEndDate());
             throw new InvalidDatesException("start date must be greater than end date");
         }
     }

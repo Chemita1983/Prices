@@ -21,7 +21,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "PRICES")
-public class PricesEntity implements Serializable {
+public class PricesVO implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +30,10 @@ public class PricesEntity implements Serializable {
 
     @Column(name = "BRAND_ID")
     private Integer brandId;
+
+    @ManyToOne
+    @JoinColumn(name = "BRAND_ID", insertable = false, updatable = false)
+    private BrandVO brand;
 
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)

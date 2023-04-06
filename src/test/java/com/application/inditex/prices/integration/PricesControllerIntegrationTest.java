@@ -22,10 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 public class PricesControllerIntegrationTest {
 
-    @Autowired
-    TestConfigurationProperties testConfigurationProperties;
-
     private static final String PRODUCT_ID = "35455";
+
+    @Autowired
+    private TestConfigurationProperties testConfigurationProperties;
 
     @Autowired
     private MockMvc mvc;

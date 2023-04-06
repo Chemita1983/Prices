@@ -33,6 +33,8 @@ public class PricesServiceImpl implements PricesService {
     @Override
     public List<PriceResponseDTO> getPricesByFilter(PricesDTO priceDTO) throws ParseException, InvalidDatesException {
 
+        log.info("Input:" + priceDTO);
+
         Price priceSearchParams = pricesMapper.convertToPrice(priceDTO);
 
         validSearchParams(priceSearchParams);
@@ -42,11 +44,12 @@ public class PricesServiceImpl implements PricesService {
         return pricesMapper.convertToPriceResponseDto(priceResult);
     }
 
-
     private void validSearchParams(Price priceSearchParams) throws InvalidDatesException {
         // Es lo más rápido que se me ha ocurrido, había pensado implementar una validación por anotación o un chain, pero lo hice así por ahorrar tiempo.
-        if (priceSearchParams.getStartDate().after(priceSearchParams.getEndDate())) {
+        if ((priceSearchParams.getStartDate() != null && priceSearchParams.getEndDate() != null)
+                && priceSearchParams.getStartDate().after(priceSearchParams.getEndDate())) {
             throw new InvalidDatesException("start date must be greater than end date");
         }
     }
 }
+

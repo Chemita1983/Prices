@@ -11,3 +11,4 @@ public interface PricesService {
 
     List<PriceResponseDTO> getPricesByFilter(PricesDTO price) throws ParseException, InvalidDatesException;
 }
+

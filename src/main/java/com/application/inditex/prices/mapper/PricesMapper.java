@@ -1,14 +1,15 @@
 package com.application.inditex.prices.mapper;
 
 import com.application.inditex.prices.domain.Price;
+import com.application.inditex.prices.entity.PricesVO;
 import com.application.inditex.prices.input.PricesDTO;
 import com.application.inditex.prices.output.PriceResponseDTO;
-import com.application.inditex.prices.entity.PricesVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +30,8 @@ public class PricesMapper {
         return Price.builder()
                 .productId(pricesDTO.getProductId())
                 .brandId(pricesDTO.getBrandId())
-                .startDate(DATE_FORMAT.parse(pricesDTO.getStartDate()))
-                .endDate(DATE_FORMAT.parse(pricesDTO.getEndDate()))
+                .startDate(mapDate(pricesDTO.getStartDate()))
+                .endDate(mapDate(pricesDTO.getEndDate()))
                 .build();
     }
 
@@ -39,6 +40,10 @@ public class PricesMapper {
         return priceResult.stream()
                 .map(this::mapToPricesResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    private Date mapDate(String date) throws ParseException {
+        return date != null ? DATE_FORMAT.parse(date) : null;
     }
 
     private PriceResponseDTO mapToPricesResponseDTO(PricesVO priceVO) {

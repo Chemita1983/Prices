@@ -15,5 +15,5 @@ import java.util.List;
 public interface PricesCustomRepository {
 
     List<PricesVO> getPriceByFilter(Price inputPrice);
-
 }
+

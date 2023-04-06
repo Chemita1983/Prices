@@ -15,3 +15,4 @@ import org.springframework.stereotype.Repository;
 public interface PricesRepository extends JpaRepository<PricesVO, Integer>, PricesCustomRepository {
     //Aquí se podría declarar el método getPricesBySearch con @Query y poner la query nativa, esto nos ahorraría 2 clases.
 }
+

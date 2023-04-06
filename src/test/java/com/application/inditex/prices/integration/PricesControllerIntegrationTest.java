@@ -24,6 +24,8 @@ public class PricesControllerIntegrationTest {
 
     private static final String PRODUCT_ID = "35455";
 
+    private static final String OTHER_PRODUCT_ID = "35456";
+
     @Autowired
     private TestConfigurationProperties testConfigurationProperties;
 
@@ -171,11 +173,26 @@ public class PricesControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").isEmpty());
     }
 
+    @Test
+    public void given_PricesDTOCustomWithMissingProductID_getPriceByFilter_ReturnsEmpty() throws Exception {
+
+        //  Test 6: Producto no encontrado
+
+        mvc.perform(MockMvcRequestBuilders
+                        .get(testConfigurationProperties.getUri() + OTHER_PRODUCT_ID)
+                        .param("brandId", "1")
+                        .param("startDate", "2020-06-10 21:00:00")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").doesNotExist())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").isEmpty());
+    }
 
     @Test
-    public void given_PricesDTOCustom6_getPriceByFilter_ReturnsBadRequestException() throws Exception {
+    public void given_PricesDTOCustomWithBadDates_getPriceByFilter_ReturnsBadRequestException() throws Exception {
 
-        //  Test 6: Fechas invalidas
+        //  Test 7: Fechas invalidas
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri() + PRODUCT_ID)
@@ -194,7 +211,7 @@ public class PricesControllerIntegrationTest {
     @Test
     public void given_BadUrl_getPriceByFilter_ReturnsNotFoundException() throws Exception {
 
-        //  Test 7: Url malformada
+        //  Test 8: Url malformada
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri() + "/badUrl/" + PRODUCT_ID)

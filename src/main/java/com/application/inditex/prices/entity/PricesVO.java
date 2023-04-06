@@ -28,6 +28,9 @@ public class PricesVO implements Serializable {
     @Column(name = "PRICE_LIST")
     private Integer priceList;
 
+    @Column(name = "PRODUCT_ID")
+    private Integer productId;
+
     @Column(name = "BRAND_ID")
     private Integer brandId;
 
@@ -42,9 +45,6 @@ public class PricesVO implements Serializable {
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-
-    @Column(name = "PRODUCT_ID")
-    private Integer productId;
 
     private Integer priority;
 

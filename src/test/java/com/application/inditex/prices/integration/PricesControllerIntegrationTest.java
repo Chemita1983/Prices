@@ -22,10 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 public class PricesControllerIntegrationTest {
 
-    private static final String PRODUCT_ID = "35455";
-
-    private static final String OTHER_PRODUCT_ID = "35456";
-
     @Autowired
     private TestConfigurationProperties testConfigurationProperties;
 
@@ -38,7 +34,8 @@ public class PricesControllerIntegrationTest {
         // Test 1: petición a las 10:00 del día 14 del producto 35455 para la brand 1 (ZARA)
 
         mvc.perform(MockMvcRequestBuilders
-                        .get(testConfigurationProperties.getUri() + PRODUCT_ID)
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId","35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-14 10:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -76,7 +73,8 @@ public class PricesControllerIntegrationTest {
         // Test 2: petición a las 16:00 del día 14 del producto 35455 para la brand 1 (ZARA)
 
         mvc.perform(MockMvcRequestBuilders
-                        .get(testConfigurationProperties.getUri() + PRODUCT_ID)
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId","35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-14 16:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -108,7 +106,8 @@ public class PricesControllerIntegrationTest {
         //  Test 3: petición a las 21:00 del día 14 del producto 35455 para la brand 1 (ZARA)
 
         mvc.perform(MockMvcRequestBuilders
-                        .get(testConfigurationProperties.getUri() + PRODUCT_ID)
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId","35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-14 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -140,7 +139,8 @@ public class PricesControllerIntegrationTest {
         //  Test 4: petición a las 10:00 del día 15 del producto 35455 para la brand 1 (ZARA)
 
         mvc.perform(MockMvcRequestBuilders
-                        .get(testConfigurationProperties.getUri() + PRODUCT_ID)
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId","35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-15 10:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -163,7 +163,8 @@ public class PricesControllerIntegrationTest {
         //  Test 5: petición a las 21:00 del día 16 del producto 35455 para la brand 1 (ZARA)
 
         mvc.perform(MockMvcRequestBuilders
-                        .get(testConfigurationProperties.getUri() + PRODUCT_ID)
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId","35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-16 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -179,7 +180,8 @@ public class PricesControllerIntegrationTest {
         //  Test 6: Producto no encontrado
 
         mvc.perform(MockMvcRequestBuilders
-                        .get(testConfigurationProperties.getUri() + OTHER_PRODUCT_ID)
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId","00000")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-10 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -195,7 +197,8 @@ public class PricesControllerIntegrationTest {
         //  Test 7: Fechas invalidas
 
         mvc.perform(MockMvcRequestBuilders
-                        .get(testConfigurationProperties.getUri() + PRODUCT_ID)
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId","35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-16 21:00:00")
                         .param("endDate", "2020-06-15 21:00:00")
@@ -214,7 +217,8 @@ public class PricesControllerIntegrationTest {
         //  Test 8: Url malformada
 
         mvc.perform(MockMvcRequestBuilders
-                        .get(testConfigurationProperties.getUri() + "/badUrl/" + PRODUCT_ID)
+                        .get(testConfigurationProperties.getUri() + "/prices")
+                        .param("productId","35555")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-16 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))

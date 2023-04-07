@@ -21,6 +21,6 @@ public class TestConfigurationProperties {
     private String domain;
 
     public String getUri() {
-        return this.protocol + "://" + this.host + ":" + this.port + "/" + this.domain + "/";
+        return this.protocol + "://" + this.host + ":" + this.port + "/" + this.domain;
     }
 }

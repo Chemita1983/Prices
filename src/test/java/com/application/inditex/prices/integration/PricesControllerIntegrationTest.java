@@ -174,7 +174,7 @@ public class PricesControllerIntegrationTest {
     }
 
     @Test
-    public void given_PricesDTOCustomWithMissingProductID_getPriceByFilter_ReturnsEmpty() throws Exception {
+    public void given_PricesDTOWithOtherProductID_getPriceByFilter_ReturnsEmptyResponse() throws Exception {
 
         //  Test 6: Producto no encontrado
 

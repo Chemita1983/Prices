@@ -2,7 +2,7 @@ package com.application.inditex.prices.mapper;
 
 import com.application.inditex.prices.domain.Price;
 import com.application.inditex.prices.entity.PricesVO;
-import com.application.inditex.prices.input.PricesDTO;
+import com.application.inditex.prices.input.PriceDTO;
 import com.application.inditex.prices.output.PriceResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,13 +25,13 @@ public class PricesMapper {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public Price convertToPrice(PricesDTO pricesDTO) throws ParseException {
+    public Price convertToPrice(PriceDTO priceDTO) throws ParseException {
 
         return Price.builder()
-                .productId(pricesDTO.getProductId())
-                .brandId(pricesDTO.getBrandId())
-                .startDate(mapDate(pricesDTO.getStartDate()))
-                .endDate(mapDate(pricesDTO.getEndDate()))
+                .productId(priceDTO.getProductId())
+                .brandId(priceDTO.getBrandId())
+                .startDate(mapDate(priceDTO.getStartDate()))
+                .endDate(mapDate(priceDTO.getEndDate()))
                 .build();
     }
 

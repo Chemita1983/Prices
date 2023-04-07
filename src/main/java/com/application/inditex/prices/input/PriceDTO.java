@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public class PricesDTO {
+public class PriceDTO {
 
     private Integer  productId;
 

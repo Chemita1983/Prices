@@ -1,7 +1,8 @@
 package com.application.inditex.prices.controller;
 
 import com.application.inditex.prices.exceptions.InvalidDatesException;
-import com.application.inditex.prices.input.PricesDTO;
+import com.application.inditex.prices.exceptions.NullValueException;
+import com.application.inditex.prices.input.PriceDTO;
 import com.application.inditex.prices.output.PriceResponseDTO;
 import com.application.inditex.prices.service.PricesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,9 @@ public class PricesController {
     public ResponseEntity<List<PriceResponseDTO>> getPriceByFilter(@PathVariable("productId") Integer productId,
                                                            @RequestParam(value = "startDate", required = false) String startDate,
                                                            @RequestParam(value = "endDate", required = false)  String endDate,
-                                                           @RequestParam("brandId") Integer brandId) throws InvalidDatesException, ParseException {
+                                                           @RequestParam("brandId") Integer brandId) throws InvalidDatesException, ParseException, NullValueException {
 
-        PricesDTO searchFilter = new PricesDTO(productId, startDate, endDate, brandId);
+        PriceDTO searchFilter = new PriceDTO(productId, startDate, endDate, brandId);
 
         return new ResponseEntity<>(pricesService.getPricesByFilter(searchFilter), HttpStatus.OK);
     }

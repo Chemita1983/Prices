@@ -18,6 +18,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class PricesExceptionHandler {
 
+    @ExceptionHandler(NullValueException.class)
+    public ResponseEntity<String> handleNullValueException(NullValueException e) {
+        log.error("Null value for: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
     @ExceptionHandler(InvalidDatesException.class)
     public ResponseEntity<String> handleInvalidDatesException(InvalidDatesException e) {
         log.error("Error occurred with dates values: " + e.getMessage());
@@ -27,7 +33,7 @@ public class PricesExceptionHandler {
     @ExceptionHandler(ParseException.class)
     public ResponseEntity<String> handleParseException(ParseException e) {
         log.error("Error occurred parsing values: " + e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred parsing data");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An error occurred parsing data: " + e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

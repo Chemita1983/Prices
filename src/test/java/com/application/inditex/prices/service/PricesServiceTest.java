@@ -126,8 +126,8 @@ public class PricesServiceTest {
 
     private List<PricesVO> getPricesVO() throws ParseException {
 
-        return List.of(new PricesVO(1, 35555, 1, new BrandVO(1, "ZARA"),
-                DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 50.0, "EUR"));
+        return List.of(new PricesVO(35555, 1,  new BrandVO(1, "ZARA"),
+                DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 1,50.0, "EUR"));
     }
 
 

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -21,16 +20,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "PRICES")
-public class PricesVO implements Serializable {
+@IdClass(PricesPkVO.class)
+public class PricesVO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PRICE_LIST")
-    private Integer priceList;
-
     @Column(name = "PRODUCT_ID")
     private Integer productId;
 
+    @Id
     @Column(name = "BRAND_ID")
     private Integer brandId;
 
@@ -38,6 +35,7 @@ public class PricesVO implements Serializable {
     @JoinColumn(name = "BRAND_ID", insertable = false, updatable = false)
     private BrandVO brand;
 
+    @Id
     @Column(name = "START_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
@@ -45,6 +43,9 @@ public class PricesVO implements Serializable {
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+
+    @Column(name = "PRICE_LIST")
+    private Integer priceList;
 
     private Integer priority;
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,9 +38,18 @@ public class PricesMapper {
 
     public List<PriceResponseDTO> convertToPriceResponseDto(List<PricesVO> priceResult) {
 
+        Integer maxPriority = getPriceResultMaxPriority(priceResult);
+
         return priceResult.stream()
+                .filter(price -> price.getPriority().equals(maxPriority))
                 .map(this::mapToPricesResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    private Integer getPriceResultMaxPriority(List<PricesVO> priceResult) {
+        if (priceResult == null || priceResult.isEmpty()) return null;
+
+        return Collections.max(priceResult.stream().map(PricesVO::getPriority).collect(Collectors.toList()));
     }
 
     private Date mapDate(String date) throws ParseException {

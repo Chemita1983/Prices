@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +38,7 @@ public class PricesMapper {
     }
 
     public List<PriceResponseDTO> convertToPriceResponseDto(List<PricesVO> priceResult) {
+        if (priceResult == null || priceResult.isEmpty()) return new ArrayList<>();
 
         Integer maxPriority = getPriceResultMaxPriority(priceResult);
 
@@ -47,7 +49,6 @@ public class PricesMapper {
     }
 
     private Integer getPriceResultMaxPriority(List<PricesVO> priceResult) {
-        if (priceResult == null || priceResult.isEmpty()) return null;
 
         return Collections.max(priceResult.stream().map(PricesVO::getPriority).collect(Collectors.toList()));
     }

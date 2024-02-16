@@ -1,11 +1,13 @@
 package com.application.inditex.prices.integration;
 
 import com.application.inditex.prices.configuration.TestConfigurationProperties;
+import com.inditex.prices.PricesApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,7 +18,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(classes = PricesApplication.class)
+@Import(TestConfigurationProperties.class)
 @AutoConfigureMockMvc
 @EnableConfigurationProperties
 @ActiveProfiles("test")
@@ -36,8 +39,8 @@ public class PricesControllerIntegrationTest {
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
                         .param("productId","35455")
-                        .param("brandId", "1")
                         .param("startDate", "2020-06-14 10:00:00")
+                        .param("brandId", "1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())

@@ -1,15 +1,18 @@
 package com.application.inditex.prices.service;
 
-import com.application.inditex.prices.domain.Price;
-import com.application.inditex.prices.entity.BrandVO;
-import com.application.inditex.prices.entity.PricesVO;
-import com.application.inditex.prices.exceptions.InvalidDatesException;
-import com.application.inditex.prices.exceptions.NullValueException;
-import com.application.inditex.prices.input.PriceDTO;
-import com.application.inditex.prices.mapper.PricesMapper;
-import com.application.inditex.prices.output.BrandResponseDTO;
-import com.application.inditex.prices.output.PriceResponseDTO;
-import com.application.inditex.prices.persistence.PricesRepository;
+import com.inditex.prices.domain.brand.Brand;
+import com.inditex.prices.domain.brand.BrandId;
+import com.inditex.prices.domain.brand.Name;
+import com.inditex.prices.domain.price.*;
+import com.inditex.prices.infraestructure.PricesAdapter;
+import com.inditex.prices.infraestructure.entity.BrandVO;
+import com.inditex.prices.infraestructure.entity.PricesVO;
+import com.inditex.prices.domain.exceptions.InvalidDatesException;
+import com.inditex.prices.domain.exceptions.NullValueException;
+import com.inditex.prices.application.obtainPrice.inbound.PriceDTO;
+import com.inditex.prices.infraestructure.mappers.PricesMapper;
+import com.inditex.prices.infraestructure.PricesRepository;
+import com.inditex.prices.infraestructure.PricesValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -30,97 +34,87 @@ public class PricesServiceTest {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private static final PriceDTO PRICE_DTO ,INVALID_PRICE_DTO, BAD_DATES_PRICE_DTO;
+    private static final PriceDTO PRICE_DTO ,INVALID_PRICE_DTO;
 
-    private static final BrandResponseDTO BRAND_RESPONSE_DTO;
 
     static {
-        PRICE_DTO = new PriceDTO(35555, "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1);
-
-        INVALID_PRICE_DTO = new PriceDTO(null, "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1);
-
-        BAD_DATES_PRICE_DTO = new PriceDTO(35555, "2020-06-18 00:00:00", "2020-06-15 00:00:00", 1);
-
-        BRAND_RESPONSE_DTO = new BrandResponseDTO(1, "ZARA");
+        try {
+            PRICE_DTO = new PriceDTO(35555, 1, DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"));
+            INVALID_PRICE_DTO = new PriceDTO(null, 1,DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @InjectMocks
-    PricesServiceImpl pricesService;
+    PricesAdapter pricesAdapter;
 
     @Mock
-    PricesValidator pricesValidator;
+    PricesValidator pricesValidatorMock;
 
     @Mock
-    PricesRepository pricesRepository;
+    PricesRepository pricesRepositoryMock;
 
     @Mock
-    PricesMapper pricesMapper;
+    PricesMapper pricesMapperMock;
 
     @Test
-    public void givenCorrectParams_getPricesByService_getPriceResponseDTO() throws InvalidDatesException, ParseException, NullValueException {
+    public void givenCorrectParams_getPricesByService_getPriceResponseDTO() throws ParseException {
 
-        when(pricesMapper.convertToPrice(any(PriceDTO.class))).thenReturn(getPrice());
+        when(pricesMapperMock.convertToPriceResponseDto(any(List.class))).thenReturn(getPrices());
 
-        doNothing().when(pricesValidator).validInputPrice(any(Price.class));
+        when(pricesRepositoryMock.findByPriceDTOWithDates(any(PriceDTO.class))).thenReturn(getPricesVO());
 
-        when(pricesMapper.convertToPriceResponseDto(any(List.class))).thenReturn(getPricesResponseDTO());
+        List<Price> pricesByFilter = pricesAdapter.getPricesByFilter(PRICE_DTO);
 
-        when(pricesRepository.getPriceByFilter(any(Price.class))).thenReturn(getPricesVO());
+        assertEquals(1, pricesByFilter.size());
 
-        List<PriceResponseDTO> pricesByFilter = pricesService.getPricesByFilter(PRICE_DTO);
-
-        assertThat(pricesByFilter.size()).isEqualTo(1);
-        assertThat(pricesByFilter.get(0).getProductId()).isEqualTo(35555);
-        assertThat(pricesByFilter.get(0).getBrand()).isEqualTo(BRAND_RESPONSE_DTO);
-        assertThat(pricesByFilter.get(0).getStartDate()).isEqualTo("2020-06-14 00:00:00");
-        assertThat(pricesByFilter.get(0).getEndDate()).isEqualTo("2020-06-15 00:00:00");
-        assertThat(pricesByFilter.get(0).getPriceList()).isEqualTo(1);
-        assertThat(pricesByFilter.get(0).getPrice()).isEqualTo(50.0);
+        assertThat(pricesByFilter.get(0).productId().value()).isEqualTo(35555);
+        assertThat(pricesByFilter.get(0).brandId().value()).isEqualTo(1);
+        assertThat(pricesByFilter.get(0).brand().name().value()).isEqualTo("test");
+        assertThat(pricesByFilter.get(0).startDate().value()).isEqualTo("2020-06-14 00:00:00");
+        assertThat(pricesByFilter.get(0).endDate().map(EndDate::value).orElse(null)).isEqualTo("2020-06-15 00:00:00");
+        assertThat(pricesByFilter.get(0).priceList().value()).isEqualTo(1);
+        assertThat(pricesByFilter.get(0).amount().value()).isEqualTo(50.0);
 
     }
 
     @Test
     public void givenNullParamProductId_getPricesByService_throwNullValuesException() throws InvalidDatesException, ParseException, NullValueException {
 
-        when(pricesMapper.convertToPrice(any(PriceDTO.class))).thenReturn(getPriceWithNullProductId());
-
-        doThrow(new NullValueException("productId cannot be null")).when(pricesValidator).validInputPrice(any(Price.class));
+        doThrow(new NullValueException("productId cannot be null")).when(pricesValidatorMock).validInputPrice(any(PriceDTO.class));
 
         NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () -> {
-            pricesService.getPricesByFilter(INVALID_PRICE_DTO);
+            pricesAdapter.getPricesByFilter(INVALID_PRICE_DTO);
         });
 
-        Assertions.assertEquals("productId cannot be null", nullValueException.getMessage());
+        assertEquals("productId cannot be null", nullValueException.getMessage());
 
     }
 
     @Test
     public void givenNullParamBrandId_getPricesByService_throwNullValuesException() throws InvalidDatesException, ParseException, NullValueException {
 
-        when(pricesMapper.convertToPrice(any(PriceDTO.class))).thenReturn(getPriceWithNullBrandId());
-
-        doThrow(new NullValueException("brandId cannot be null")).when(pricesValidator).validInputPrice(any(Price.class));
+        doThrow(new NullValueException("brandId cannot be null")).when(pricesValidatorMock).validInputPrice(any(PriceDTO.class));
 
         NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () -> {
-            pricesService.getPricesByFilter(INVALID_PRICE_DTO);
+            pricesAdapter.getPricesByFilter(INVALID_PRICE_DTO);
         });
 
-        Assertions.assertEquals("brandId cannot be null", nullValueException.getMessage());
+        assertEquals("brandId cannot be null", nullValueException.getMessage());
 
     }
 
     @Test
     public void givenBadDatesParams_getPricesByService_throwInvalidDatesException() throws InvalidDatesException, ParseException, NullValueException {
 
-        when(pricesMapper.convertToPrice(any(PriceDTO.class))).thenReturn(getPriceWithInvalidDates());
-
-        doThrow(new InvalidDatesException("start date must be greater than end date")).when(pricesValidator).validInputPrice(any(Price.class));
+        doThrow(new InvalidDatesException("start date must be greater than end date")).when(pricesValidatorMock).validInputPrice(any(PriceDTO.class));
 
         InvalidDatesException invalidDatesException = Assertions.assertThrows(InvalidDatesException.class, () -> {
-            pricesService.getPricesByFilter(INVALID_PRICE_DTO);
+            pricesAdapter.getPricesByFilter(INVALID_PRICE_DTO);
         });
 
-        Assertions.assertEquals("start date must be greater than end date", invalidDatesException.getMessage());
+        assertEquals("start date must be greater than end date", invalidDatesException.getMessage());
 
     }
 
@@ -133,47 +127,33 @@ public class PricesServiceTest {
 
     private Price getPrice() throws ParseException {
 
-        return Price.builder()
-                .productId(35555)
-                .brandId(1)
-                .startDate(DATE_FORMAT.parse("2020-06-14 00:00:00"))
-                .endDate(DATE_FORMAT.parse("2020-06-15 00:00:00"))
-                .build();
+        return new Price(
+                    new ProductId(35555),
+                    new Brand(new BrandId(1), new Name("test")),
+                    new StartDate(DATE_FORMAT.parse("2020-06-14 00:00:00")),
+                    new EndDate(DATE_FORMAT.parse("2020-06-15 00:00:00")),
+                    new PriceList(1),
+                    new Amount(50.0)
+        );
+
     }
 
-    private Price getPriceWithNullProductId() throws ParseException {
-
-        return Price.builder()
-                .productId(null)
-                .brandId(1)
-                .startDate(DATE_FORMAT.parse("2020-06-14 00:00:00"))
-                .endDate(DATE_FORMAT.parse("2020-06-15 00:00:00"))
-                .build();
-    }
-
-    private Price getPriceWithNullBrandId() throws ParseException {
-
-        return Price.builder()
-                .productId(35555)
-                .brandId(null)
-                .startDate(DATE_FORMAT.parse("2020-06-14 00:00:00"))
-                .endDate(DATE_FORMAT.parse("2020-06-15 00:00:00"))
-                .build();
-    }
 
 
     private Price getPriceWithInvalidDates() throws ParseException {
 
-        return Price.builder()
-                .productId(35555)
-                .brandId(1)
-                .startDate(DATE_FORMAT.parse("2020-06-18 00:00:00"))
-                .endDate(DATE_FORMAT.parse("2020-06-15 00:00:00"))
-                .build();
+        return new Price(
+                new ProductId(35555),
+                new Brand(new BrandId(1), new Name("test")),
+                new StartDate(DATE_FORMAT.parse("2020-06-18 00:00:00")),
+                new EndDate(DATE_FORMAT.parse("2020-06-15 00:00:00")),
+                new PriceList(1),
+                new Amount(20.0)
+        );
+
     }
 
-    private List<PriceResponseDTO> getPricesResponseDTO() throws ParseException {
-
-        return List.of(new PriceResponseDTO(35555, BRAND_RESPONSE_DTO, "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1, 50.0));
+    private List<Price> getPrices() throws ParseException {
+        return List.of(getPrice());
     }
 }

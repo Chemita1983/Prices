@@ -1,11 +1,12 @@
 package com.application.inditex.prices.controller;
 
-import com.application.inditex.prices.exceptions.InvalidDatesException;
-import com.application.inditex.prices.exceptions.NullValueException;
-import com.application.inditex.prices.input.PriceDTO;
-import com.application.inditex.prices.output.BrandResponseDTO;
-import com.application.inditex.prices.output.PriceResponseDTO;
-import com.application.inditex.prices.service.PricesService;
+import com.inditex.prices.application.obtainPrice.ObtainPrice;
+import com.inditex.prices.controller.PricesController;
+import com.inditex.prices.domain.exceptions.InvalidDatesException;
+import com.inditex.prices.domain.exceptions.NullValueException;
+import com.inditex.prices.application.obtainPrice.inbound.PriceDTO;
+import com.inditex.prices.application.obtainPrice.outbound.BrandResponseDTO;
+import com.inditex.prices.application.obtainPrice.outbound.PriceResponseDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -23,18 +25,20 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class PricesControllerTest {
 
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     @InjectMocks
     PricesController pricesController;
 
     @Mock
-    PricesService pricesServiceMock;
+    ObtainPrice obtainPriceMock;
 
     @Test
     public void givenSearchParams_getPriceByFilter_returnsPrices() throws InvalidDatesException, ParseException, NullValueException {
 
-        when(pricesServiceMock.getPricesByFilter(any(PriceDTO.class))).thenReturn(getPriceResponseForTest());
+        when(obtainPriceMock.getPriceByFilter(any(PriceDTO.class))).thenReturn(getPriceResponseForTest());
 
-        List<PriceResponseDTO> priceByFilter = pricesController.getPriceByFilter(35555, "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1).getBody();
+        List<PriceResponseDTO> priceByFilter = pricesController.getPriceByFilter(35555, DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1).getBody();
 
         assertThat(priceByFilter).isNotNull();
         assertThat(priceByFilter.size()).isEqualTo(1);
@@ -49,10 +53,10 @@ public class PricesControllerTest {
     @Test
     public void givenBadSearchParams_getPriceByFilter_returnException() throws InvalidDatesException, ParseException, NullValueException {
 
-        when(pricesServiceMock.getPricesByFilter(any(PriceDTO.class))).thenThrow(new NullValueException("ProductId cannot be null"));
+        when(obtainPriceMock.getPriceByFilter(any(PriceDTO.class))).thenThrow(new NullValueException("ProductId cannot be null"));
 
         NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () -> {
-            pricesController.getPriceByFilter(null, "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1);
+            pricesController.getPriceByFilter(null,  DATE_FORMAT.parse("2020-06-14 00:00:00"),  DATE_FORMAT.parse("2020-06-15 00:00:00"), 1);
         });
 
         Assertions.assertEquals("ProductId cannot be null", nullValueException.getMessage());
@@ -61,10 +65,10 @@ public class PricesControllerTest {
     @Test
     public void givenBadDatesParams_getPriceByFilter_returnException() throws InvalidDatesException, ParseException, NullValueException {
 
-        when(pricesServiceMock.getPricesByFilter(any(PriceDTO.class))).thenThrow(new InvalidDatesException("start date must be greater than end date"));
+        when(obtainPriceMock.getPriceByFilter(any(PriceDTO.class))).thenThrow(new InvalidDatesException("start date must be greater than end date"));
 
         InvalidDatesException invalidDatesException = Assertions.assertThrows(InvalidDatesException.class, () -> {
-            pricesController.getPriceByFilter(35555, "2020-06-16 00:00:00", "2020-06-15 00:00:00", 1);
+            pricesController.getPriceByFilter(35555,  DATE_FORMAT.parse("2020-06-16 00:00:00"),  DATE_FORMAT.parse("2020-06-15 00:00:00"), 1);
         });
 
         Assertions.assertEquals("start date must be greater than end date", invalidDatesException.getMessage());

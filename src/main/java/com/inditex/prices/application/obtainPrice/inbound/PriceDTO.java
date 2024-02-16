@@ -1,20 +1,38 @@
 package com.inditex.prices.application.obtainPrice.inbound;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@AllArgsConstructor
-@Getter
+
 public class PriceDTO {
 
-    private Integer productId;
+    private final Integer productId;
 
-    private Integer brandId;
+    private final Integer brandId;
 
-    private Date startDate;
+    private final Date startDate;
 
-    private Date endDate;
+    private final Date endDate;
+
+    public PriceDTO(Integer productId, Integer brandId, Date startDate, Date endDate) {
+        this.productId = productId;
+        this.brandId = brandId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public Integer getBrandId() {
+        return brandId;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
 }

@@ -1,13 +1,10 @@
 package com.application.inditex.prices.configuration;
 
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@Getter
-@Setter
+
 @Configuration
 @ConfigurationProperties(prefix = "test")
 public class TestConfigurationProperties {
@@ -19,6 +16,38 @@ public class TestConfigurationProperties {
     private String port;
 
     private String domain;
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 
     public String getUri() {
         return this.protocol + "://" + this.host + ":" + this.port + "/" + this.domain;

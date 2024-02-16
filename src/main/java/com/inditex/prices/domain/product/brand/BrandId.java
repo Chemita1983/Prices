@@ -1,17 +1,17 @@
-package com.inditex.prices.domain.price;
+package com.inditex.prices.domain.product.brand;
 
-public class Amount {
+public class BrandId {
 
-    private final Double value;
+    private final Integer value;
 
-    public Amount(Double value) {
+    public BrandId(Integer value) {
         if (value == null) throw new IllegalArgumentException("value cannot be null");
         if (value <= 0) throw new IllegalArgumentException("value must be greater than 0");
 
         this.value = value;
     }
 
-    public Double value() {
+    public Integer value() {
         return value;
     }
 }

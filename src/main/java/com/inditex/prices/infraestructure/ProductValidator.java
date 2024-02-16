@@ -5,13 +5,10 @@ import com.inditex.prices.domain.exceptions.InvalidDatesException;
 import com.inditex.prices.domain.exceptions.NullValueException;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 @Component
-public class PricesValidator {
+public class ProductValidator {
 
     public void validInputPrice(PriceDTO priceSearchParams) throws InvalidDatesException, NullValueException {
 

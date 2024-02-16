@@ -1,18 +1,9 @@
 package com.inditex.prices.infraestructure.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
-
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "BRAND")
 public class BrandVO {
 
@@ -22,5 +13,21 @@ public class BrandVO {
     private Integer brandId;
 
     private String name;
+
+    public BrandVO(){
+    }
+
+    public BrandVO(Integer brandId, String name) {
+        this.brandId = brandId;
+        this.name = name;
+    }
+
+    public Integer getBrandId() {
+        return brandId;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
 

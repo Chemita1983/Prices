@@ -1,4 +1,4 @@
-package com.inditex.prices.domain.brand;
+package com.inditex.prices.domain.product.brand;
 
 public class Brand {
 
@@ -13,11 +13,11 @@ public class Brand {
         this.name = name;
     }
 
-    public BrandId brandId() {
+    public BrandId getBrandId() {
         return brandId;
     }
 
-    public Name name() {
+    public Name getName() {
         return name;
     }
 }

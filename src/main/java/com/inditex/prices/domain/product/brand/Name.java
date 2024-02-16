@@ -1,4 +1,4 @@
-package com.inditex.prices.domain.brand;
+package com.inditex.prices.domain.product.brand;
 
 public class Name {
 

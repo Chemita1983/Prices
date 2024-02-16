@@ -1,11 +1,10 @@
-package com.inditex.prices.domain.price;
+package com.inditex.prices.domain.product;
 
-import com.inditex.prices.domain.brand.Brand;
-import com.inditex.prices.domain.brand.BrandId;
+import com.inditex.prices.domain.product.brand.Brand;
 
 import java.util.Optional;
 
-public class Price {
+public class Product {
 
     private final ProductId productId;
 
@@ -17,42 +16,42 @@ public class Price {
 
     private final PriceList priceList;
 
-    private final Amount amount;
+    private final Amount price;
 
-    public Price(ProductId productId, Brand brand, StartDate startDate, EndDate endDate, PriceList priceList, Amount amount) {
+    public Product(ProductId productId, Brand brand, StartDate startDate, EndDate endDate, PriceList priceList, Amount price) {
         if(productId == null) throw new IllegalArgumentException("productId cannot be null");
         if(brand == null) throw new IllegalArgumentException("brand cannot be null");
         if(startDate == null) throw new IllegalArgumentException("startDate cannot be null");
         if(priceList == null) throw new IllegalArgumentException("priceList cannot be null");
-        if(amount == null) throw new IllegalArgumentException("amount cannot be null");
+        if(price == null) throw new IllegalArgumentException("amount cannot be null");
         if(startDate.value().after(endDate.value())) throw new IllegalArgumentException("start date must be greater than end date ");
         this.productId = productId;
         this.brand = brand;
         this.startDate = startDate;
         this.endDate = endDate;
         this.priceList = priceList;
-        this.amount = amount;
+        this.price = price;
     }
 
-    public ProductId productId() {return productId;}
+    public ProductId getProductId() {
+        return productId;
+    }
 
-    public Brand brand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public StartDate startDate() {
+    public StartDate getStartDate() {
         return startDate;
     }
 
-    public Optional<EndDate> endDate() {
-        return Optional.of(endDate);
+    public Optional<EndDate> getEndDate() { return Optional.ofNullable(endDate); }
+
+    public PriceList getPriceList() {
+        return priceList;
     }
 
-    public BrandId brandId(){
-        return brand.brandId();
+    public Amount getPrice() {
+        return price;
     }
-
-    public PriceList priceList() {return priceList; }
-
-    public Amount amount() {return amount;}
 }

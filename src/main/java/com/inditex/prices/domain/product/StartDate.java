@@ -1,4 +1,4 @@
-package com.inditex.prices.domain.price;
+package com.inditex.prices.domain.product;
 
 import java.util.Date;
 

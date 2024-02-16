@@ -1,18 +1,28 @@
 package com.inditex.prices.infraestructure.mappers;
 
-import com.inditex.prices.domain.brand.Brand;
-import com.inditex.prices.domain.brand.BrandId;
-import com.inditex.prices.domain.brand.Name;
+import com.inditex.prices.domain.product.brand.Brand;
+import com.inditex.prices.domain.product.brand.BrandId;
+import com.inditex.prices.domain.product.brand.Name;
 import com.inditex.prices.infraestructure.entity.BrandVO;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class BrandMapper {
+@Mapper
+public interface BrandMapper {
 
-   public Brand mapToBrand(BrandVO brandVO){
-       return new Brand(
-               new BrandId(brandVO.getBrandId()),
-               new Name(brandVO.getName()));
+    BrandMapper INSTANCE = Mappers.getMapper(BrandMapper.class);
+
+    @Mapping(source = "brandId", target = "brandId")
+    @Mapping(source = "name", target = "name")
+    Brand mapToBrand(BrandVO brandVO);
+
+    default BrandId mapToBrandId(Integer brandId) {
+        return new BrandId(brandId);
+    }
+
+    default Name mapToName(String name) {
+        return new Name(name);
     }
 }
 

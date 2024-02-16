@@ -2,13 +2,11 @@ package com.inditex.prices.infraestructure;
 
 import com.inditex.prices.application.obtainPrice.inbound.PriceDTO;
 import com.inditex.prices.domain.PricesPort;
-import com.inditex.prices.domain.price.Price;
+import com.inditex.prices.domain.product.Product;
 import com.inditex.prices.infraestructure.entity.PricesVO;
-import com.inditex.prices.infraestructure.mappers.PricesMapper;
+import com.inditex.prices.infraestructure.mappers.ProductMapper;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -18,22 +16,22 @@ import java.util.stream.Collectors;
 @Service
 public class PricesAdapter implements PricesPort {
 
-    private final PricesMapper pricesMapper;
+    private final ProductMapper productMapper;
 
-    private final PricesValidator pricesValidator;
+    private final ProductValidator productValidator;
 
     private final PricesRepository pricesRepository;
 
-    public PricesAdapter(PricesMapper pricesMapper, PricesValidator pricesValidator, PricesRepository pricesRepository) {
-        this.pricesMapper = pricesMapper;
-        this.pricesValidator = pricesValidator;
+    public PricesAdapter(ProductMapper productMapper, ProductValidator productValidator, PricesRepository pricesRepository) {
+        this.productMapper = productMapper;
+        this.productValidator = productValidator;
         this.pricesRepository = pricesRepository;
     }
 
     @Override
-    public List<Price> getPricesByFilter(PriceDTO priceDTO) {
+    public List<Product> getPricesByFilter(PriceDTO priceDTO) {
 
-        pricesValidator.validInputPrice(priceDTO);
+        productValidator.validInputPrice(priceDTO);
 
         return getQueryResult(priceDTO)
                 .map(this::getPrices)
@@ -41,10 +39,10 @@ public class PricesAdapter implements PricesPort {
 
     }
 
-    private List<Price> getPrices(List<PricesVO> pricesResult) {
+    private List<Product> getPrices(List<PricesVO> pricesResult) {
         return pricesResult.stream()
                 .filter(price -> price.getPriority().equals(getPriceResultMaxPriority(pricesResult)))
-                .map(pricesMapper::mapToPrice)
+                .map(productMapper::mapToPrice)
                 .collect(Collectors.toList());
     }
 

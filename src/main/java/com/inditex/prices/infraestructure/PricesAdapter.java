@@ -8,9 +8,11 @@ import com.inditex.prices.infraestructure.mappers.PricesMapper;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -33,9 +35,21 @@ public class PricesAdapter implements PricesPort {
 
         pricesValidator.validInputPrice(priceDTO);
 
-        List<PricesVO> priceResult = getQueryResult(priceDTO).orElse(Collections.emptyList());
+        return getQueryResult(priceDTO)
+                .map(this::getPrices)
+                .orElse(Collections.emptyList());
 
-        return pricesMapper.convertToPriceResponseDto(priceResult);
+    }
+
+    private List<Price> getPrices(List<PricesVO> pricesResult) {
+        return pricesResult.stream()
+                .filter(price -> price.getPriority().equals(getPriceResultMaxPriority(pricesResult)))
+                .map(pricesMapper::mapToPrice)
+                .collect(Collectors.toList());
+    }
+
+    private Integer getPriceResultMaxPriority(List<PricesVO> priceResult) {
+        return Collections.max(priceResult.stream().map(PricesVO::getPriority).collect(Collectors.toList()));
     }
 
     private Optional<List<PricesVO>> getQueryResult(PriceDTO priceDTO) {

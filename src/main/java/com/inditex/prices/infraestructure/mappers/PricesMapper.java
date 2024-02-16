@@ -18,20 +18,7 @@ public class PricesMapper {
         this.brandMapper = brandMapper;
     }
 
-    public List<Price> convertToPriceResponseDto(List<PricesVO> priceResult) {
-        if (priceResult == null || priceResult.isEmpty()) return new ArrayList<>();
-
-        return priceResult.stream()
-                .filter(price -> price.getPriority().equals(getPriceResultMaxPriority(priceResult)))
-                .map(this::mapToPrice)
-                .collect(Collectors.toList());
-    }
-
-    private Integer getPriceResultMaxPriority(List<PricesVO> priceResult) {
-        return Collections.max(priceResult.stream().map(PricesVO::getPriority).collect(Collectors.toList()));
-    }
-
-    private Price mapToPrice(PricesVO priceVO) {
+    public Price mapToPrice(PricesVO priceVO) {
 
         return new Price(
                 new ProductId(priceVO.getProductId()),

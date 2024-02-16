@@ -61,7 +61,7 @@ public class PricesServiceTest {
     @Test
     public void givenCorrectParams_getPricesByService_getPriceResponseDTO() throws ParseException {
 
-        when(pricesMapperMock.convertToPriceResponseDto(any(List.class))).thenReturn(getPrices());
+        when(pricesMapperMock.mapToPrice(any(PricesVO.class))).thenReturn(getPrice());
 
         when(pricesRepositoryMock.findByPriceDTOWithDates(any(PriceDTO.class))).thenReturn(getPricesVO());
 
@@ -106,7 +106,7 @@ public class PricesServiceTest {
     }
 
     @Test
-    public void givenBadDatesParams_getPricesByService_throwInvalidDatesException() throws InvalidDatesException, ParseException, NullValueException {
+    public void givenBadDatesParams_getPricesByService_throwInvalidDatesException() throws InvalidDatesException, NullValueException {
 
         doThrow(new InvalidDatesException("start date must be greater than end date")).when(pricesValidatorMock).validInputPrice(any(PriceDTO.class));
 
@@ -136,24 +136,5 @@ public class PricesServiceTest {
                     new Amount(50.0)
         );
 
-    }
-
-
-
-    private Price getPriceWithInvalidDates() throws ParseException {
-
-        return new Price(
-                new ProductId(35555),
-                new Brand(new BrandId(1), new Name("test")),
-                new StartDate(DATE_FORMAT.parse("2020-06-18 00:00:00")),
-                new EndDate(DATE_FORMAT.parse("2020-06-15 00:00:00")),
-                new PriceList(1),
-                new Amount(20.0)
-        );
-
-    }
-
-    private List<Price> getPrices() throws ParseException {
-        return List.of(getPrice());
     }
 }

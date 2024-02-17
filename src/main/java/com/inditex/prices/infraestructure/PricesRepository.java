@@ -1,6 +1,6 @@
 package com.inditex.prices.infraestructure;
 
-import com.inditex.prices.application.obtainPrice.inbound.PriceDTO;
+import com.inditex.prices.application.inbound.PriceDTO;
 import com.inditex.prices.infraestructure.entity.PricesVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

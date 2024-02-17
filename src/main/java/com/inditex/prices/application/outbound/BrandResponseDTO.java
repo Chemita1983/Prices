@@ -1,4 +1,4 @@
-package com.inditex.prices.application.obtainPrice.outbound;
+package com.inditex.prices.application.outbound;
 
 
 public class BrandResponseDTO {

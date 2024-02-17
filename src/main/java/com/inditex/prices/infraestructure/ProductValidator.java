@@ -1,6 +1,6 @@
 package com.inditex.prices.infraestructure;
 
-import com.inditex.prices.application.obtainPrice.inbound.PriceDTO;
+import com.inditex.prices.application.inbound.PriceDTO;
 import com.inditex.prices.domain.exceptions.InvalidDatesException;
 import com.inditex.prices.domain.exceptions.NullValueException;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.inditex.prices.application.obtainPrice.inbound;
+package com.inditex.prices.application.inbound;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

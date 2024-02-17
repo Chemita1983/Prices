@@ -1,8 +1,8 @@
-package com.inditex.prices.application.obtainPrice;
+package com.inditex.prices.application;
 
-import com.inditex.prices.application.obtainPrice.inbound.PriceDTO;
-import com.inditex.prices.application.obtainPrice.mappers.PricesOutboundMapper;
-import com.inditex.prices.application.obtainPrice.outbound.PriceResponseDTO;
+import com.inditex.prices.application.inbound.PriceDTO;
+import com.inditex.prices.application.mappers.PricesOutboundMapper;
+import com.inditex.prices.application.outbound.PriceResponseDTO;
 import com.inditex.prices.domain.PricesPort;
 import org.springframework.stereotype.Service;
 

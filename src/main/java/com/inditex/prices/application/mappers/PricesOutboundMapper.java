@@ -1,6 +1,6 @@
-package com.inditex.prices.application.obtainPrice.mappers;
+package com.inditex.prices.application.mappers;
 
-import com.inditex.prices.application.obtainPrice.outbound.PriceResponseDTO;
+import com.inditex.prices.application.outbound.PriceResponseDTO;
 import com.inditex.prices.domain.product.brand.BrandId;
 import com.inditex.prices.domain.product.brand.Name;
 import com.inditex.prices.domain.product.*;
@@ -9,7 +9,6 @@ import org.mapstruct.Mapping;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Optional;
 
 @Mapper
 public interface PricesOutboundMapper {

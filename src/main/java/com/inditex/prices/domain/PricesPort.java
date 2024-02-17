@@ -1,6 +1,6 @@
 package com.inditex.prices.domain;
 
-import com.inditex.prices.application.obtainPrice.inbound.PriceDTO;
+import com.inditex.prices.application.inbound.PriceDTO;
 import com.inditex.prices.domain.product.Product;
 
 import java.text.ParseException;

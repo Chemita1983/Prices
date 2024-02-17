@@ -1,6 +1,6 @@
-package com.inditex.prices.application.obtainPrice.mappers;
+package com.inditex.prices.application.mappers;
 
-import com.inditex.prices.application.obtainPrice.outbound.BrandResponseDTO;
+import com.inditex.prices.application.outbound.BrandResponseDTO;
 import com.inditex.prices.domain.product.brand.Brand;
 import org.springframework.stereotype.Service;
 

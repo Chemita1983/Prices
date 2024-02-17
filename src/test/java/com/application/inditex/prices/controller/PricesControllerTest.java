@@ -16,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -76,6 +78,6 @@ public class PricesControllerTest {
 
 
     private List<PriceResponseDTO> getPriceResponseForTest() {
-        return List.of(new PriceResponseDTO(35555, new BrandResponseDTO(1,"ZARA"), "2020-06-14 00:00:00","2020-06-15 00:00:00", 1, 30.50));
+        return Collections.singletonList(new PriceResponseDTO(35555, new BrandResponseDTO(1, "ZARA"), "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1, 30.50));
     }
 }

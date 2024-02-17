@@ -22,6 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -73,7 +74,7 @@ public class PricesServiceTest {
         assertThat(pricesByFilter.get(0).getBrand().getBrandId().value()).isEqualTo(1);
         assertThat(pricesByFilter.get(0).getBrand().getName().value()).isEqualTo("test");
         assertThat(pricesByFilter.get(0).getStartDate().value()).isEqualTo("2020-06-14 00:00:00");
-        assertThat(pricesByFilter.get(0).getEndDate().map(EndDate::value).orElse(null)).isEqualTo("2020-06-15 00:00:00");
+        assertThat(pricesByFilter.get(0).getEndDate().value()).isEqualTo("2020-06-15 00:00:00");
         assertThat(pricesByFilter.get(0).getPriceList().value()).isEqualTo(1);
         assertThat(pricesByFilter.get(0).getPrice().value()).isEqualTo(50.0);
 
@@ -120,7 +121,7 @@ public class PricesServiceTest {
 
     private List<PricesVO> getPricesVO() throws ParseException {
 
-        return List.of(new PricesVO(35555, 1,  new BrandVO(1, "ZARA"),
+        return Collections.singletonList(new PricesVO(35555, 1,  new BrandVO(1, "ZARA"),
                 DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 1,50.0, "EUR"));
     }
 

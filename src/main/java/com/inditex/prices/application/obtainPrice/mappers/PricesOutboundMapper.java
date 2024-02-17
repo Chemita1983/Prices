@@ -41,9 +41,10 @@ public interface PricesOutboundMapper {
         return dateFormat.format(startDate.value());
     }
 
-    default String map(Optional<EndDate> endDate){
+    default String map(EndDate endDate){
+        if(endDate == null) return null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return endDate.map(it-> dateFormat.format(it.value())).orElse(null);
+        return dateFormat.format(endDate.value());
     }
 
     default Integer map(PriceList priceList){

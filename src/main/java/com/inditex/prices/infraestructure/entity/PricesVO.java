@@ -1,13 +1,21 @@
 package com.inditex.prices.infraestructure.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
 
 @Entity
-
 @Table(name = "PRICES")
 @IdClass(PricesPkVO.class)
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class PricesVO {
 
     @Id
@@ -39,91 +47,4 @@ public class PricesVO {
     private Double price;
 
     private String curr;
-
-    public PricesVO(){
-    }
-
-    public PricesVO(Integer productId, Integer brandId, BrandVO brand, Date startDate, Date endDate, Integer priceList, Integer priority, Double price, String curr) {
-        this.productId = productId;
-        this.brandId = brandId;
-        this.brand = brand;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.priceList = priceList;
-        this.priority = priority;
-        this.price = price;
-        this.curr = curr;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public Integer getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(Integer brandId) {
-        this.brandId = brandId;
-    }
-
-    public BrandVO getBrand() {
-        return brand;
-    }
-
-    public void setBrand(BrandVO brand) {
-        this.brand = brand;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Integer getPriceList() {
-        return priceList;
-    }
-
-    public void setPriceList(Integer priceList) {
-        this.priceList = priceList;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getCurr() {
-        return curr;
-    }
-
-    public void setCurr(String curr) {
-        this.curr = curr;
-    }
 }

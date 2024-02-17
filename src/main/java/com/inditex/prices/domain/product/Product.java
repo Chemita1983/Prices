@@ -1,9 +1,11 @@
 package com.inditex.prices.domain.product;
 
 import com.inditex.prices.domain.product.brand.Brand;
+import lombok.Getter;
 
 import java.util.Optional;
 
+@Getter
 public class Product {
 
     private final ProductId productId;
@@ -31,27 +33,5 @@ public class Product {
         this.endDate = endDate;
         this.priceList = priceList;
         this.price = price;
-    }
-
-    public ProductId getProductId() {
-        return productId;
-    }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public StartDate getStartDate() {
-        return startDate;
-    }
-
-    public Optional<EndDate> getEndDate() { return Optional.ofNullable(endDate); }
-
-    public PriceList getPriceList() {
-        return priceList;
-    }
-
-    public Amount getPrice() {
-        return price;
     }
 }

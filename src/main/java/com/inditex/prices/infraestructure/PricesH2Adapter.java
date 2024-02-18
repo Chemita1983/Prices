@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class PricesAdapter implements PricesPort {
+public class PricesH2Adapter implements PricesPort {
 
     private final ProductMapper productMapper;
 
@@ -21,7 +21,7 @@ public class PricesAdapter implements PricesPort {
 
     private final PricesRepository pricesRepository;
 
-    public PricesAdapter(ProductMapper productMapper, ProductValidator productValidator, PricesRepository pricesRepository) {
+    public PricesH2Adapter(ProductMapper productMapper, ProductValidator productValidator, PricesRepository pricesRepository) {
         this.productMapper = productMapper;
         this.productValidator = productValidator;
         this.pricesRepository = pricesRepository;

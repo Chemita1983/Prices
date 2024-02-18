@@ -11,12 +11,11 @@ import java.util.Objects;
 public class ProductValidator {
 
     public void validInputPrice(PriceDTO priceSearchParams) throws InvalidDatesException, NullValueException {
+        if (priceSearchParams == null) throw new IllegalArgumentException("priceDTO cannot be null");
 
-        if (Objects.isNull(priceSearchParams.getProductId()))
-            throw new NullValueException("productId cannot be null");
+        if (Objects.isNull(priceSearchParams.getProductId())) throw new NullValueException("productId cannot be null");
 
-        if (Objects.isNull(priceSearchParams.getBrandId()))
-            throw new NullValueException("brandId cannot be null");
+        if (Objects.isNull(priceSearchParams.getBrandId())) throw new NullValueException("brandId cannot be null");
 
         if ((priceSearchParams.getStartDate() != null && priceSearchParams.getEndDate() != null) && priceSearchParams.getStartDate().after(priceSearchParams.getEndDate())) {
             throw new InvalidDatesException("start date must be greater than end date");

@@ -46,15 +46,15 @@ public class PricesAdapter implements PricesPort {
     }
 
     private List<PricesVO> getQueryResult(PriceDTO priceDTO) {
-        if (priceDTO == null) throw new IllegalArgumentException("PriceDTO cannot be null");
+        return selectorQuery().invoke(priceDTO);
+    }
 
-        QueryChooser queryChooser = dto -> {
+    private QuerySelector selectorQuery() {
+        return dto -> {
             if (dto.getStartDate() == null && dto.getEndDate() == null) return pricesRepository.findByPriceDTOWithoutDates(dto);
             else if (dto.getStartDate() != null && dto.getEndDate() == null) return pricesRepository.findByPriceDTOWithStartDate(dto);
             else if (dto.getStartDate() == null && dto.getEndDate() != null) return pricesRepository.findByPriceDTOWithEndDate(dto);
             else return pricesRepository.findByPriceDTOWithDates(dto);
         };
-
-        return queryChooser.invoke(priceDTO);
     }
 }

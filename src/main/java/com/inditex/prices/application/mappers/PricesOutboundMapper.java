@@ -12,8 +12,6 @@ import java.util.List;
 
 @Mapper
 public interface PricesOutboundMapper {
-
-
     @Mapping(source = "productId", target = "productId")
     @Mapping(source = "brand", target = "brand")
     @Mapping(source = "startDate", target = "startDate")

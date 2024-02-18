@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -30,13 +29,9 @@ public class PricesAdapter implements PricesPort {
 
     @Override
     public List<Product> getPricesByFilter(PriceDTO priceDTO) {
-
         productValidator.validInputPrice(priceDTO);
 
-        return getQueryResult(priceDTO)
-                .map(this::getPrices)
-                .orElse(Collections.emptyList());
-
+        return getPrices(getQueryResult(priceDTO));
     }
 
     private List<Product> getPrices(List<PricesVO> pricesResult) {
@@ -50,20 +45,20 @@ public class PricesAdapter implements PricesPort {
         return Collections.max(priceResult.stream().map(PricesVO::getPriority).collect(Collectors.toList()));
     }
 
-    private Optional<List<PricesVO>> getQueryResult(PriceDTO priceDTO) {
+    private List<PricesVO> getQueryResult(PriceDTO priceDTO) {
 
         if(null == priceDTO.getStartDate() && null == priceDTO.getEndDate()) {
-            return Optional.of(pricesRepository.findByPriceDTOWithoutDates(priceDTO));
+            return pricesRepository.findByPriceDTOWithoutDates(priceDTO);
         }
 
         if(null != priceDTO.getStartDate() && null == priceDTO.getEndDate()) {
-           return Optional.of(pricesRepository.findByPriceDTOWithStartDate(priceDTO));
+           return pricesRepository.findByPriceDTOWithStartDate(priceDTO);
         }
 
         if(null == priceDTO.getStartDate() && null != priceDTO.getEndDate()) {
-            return Optional.of(pricesRepository.findByPriceDTOWithEndDate(priceDTO));
+            return pricesRepository.findByPriceDTOWithEndDate(priceDTO);
         }
 
-        return Optional.of(pricesRepository.findByPriceDTOWithDates(priceDTO));
+        return pricesRepository.findByPriceDTOWithDates(priceDTO);
     }
 }

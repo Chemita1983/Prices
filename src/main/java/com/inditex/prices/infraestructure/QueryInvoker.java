@@ -7,6 +7,6 @@ import com.inditex.prices.infraestructure.entity.PricesVO;
 import java.util.List;
 
 @FunctionalInterface
-public interface QuerySelector {
+public interface QueryInvoker {
     List<PricesVO> invoke(PriceDTO priceDTO);
 }

@@ -31,7 +31,9 @@ public class PricesAdapter implements PricesPort {
     public List<Product> getPricesByFilter(PriceDTO priceDTO) {
         productValidator.validInputPrice(priceDTO);
 
-        return getPrices(getQueryResult(priceDTO));
+        List<PricesVO> pricesQueryResult = getPricesQuery().invoke(priceDTO);
+
+        return getPrices(pricesQueryResult);
     }
 
     private List<Product> getPrices(List<PricesVO> pricesResult) {
@@ -45,11 +47,7 @@ public class PricesAdapter implements PricesPort {
         return Collections.max(priceResult.stream().map(PricesVO::getPriority).collect(Collectors.toList()));
     }
 
-    private List<PricesVO> getQueryResult(PriceDTO priceDTO) {
-        return selectorQuery().invoke(priceDTO);
-    }
-
-    private QuerySelector selectorQuery() {
+    private QueryInvoker getPricesQuery() {
         return dto -> {
             if (dto.getStartDate() == null && dto.getEndDate() == null) return pricesRepository.findByPriceDTOWithoutDates(dto);
             else if (dto.getStartDate() != null && dto.getEndDate() == null) return pricesRepository.findByPriceDTOWithStartDate(dto);

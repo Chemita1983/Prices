@@ -3,9 +3,8 @@ package com.inditex.prices.infraestructure.mappers;
 import com.inditex.prices.domain.product.brand.Brand;
 import com.inditex.prices.domain.product.brand.BrandId;
 import com.inditex.prices.domain.product.brand.Name;
-import com.inditex.prices.infraestructure.entity.BrandVO;
+import com.inditex.prices.infraestructure.repository.entity.BrandVO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper

@@ -1,4 +1,4 @@
-package com.inditex.prices.infraestructure;
+package com.inditex.prices.infraestructure.adapters.validation;
 
 import com.inditex.prices.api.inbound.PriceDTO;
 import com.inditex.prices.domain.exceptions.InvalidDatesException;

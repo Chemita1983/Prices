@@ -1,4 +1,4 @@
-package com.inditex.prices.infraestructure.entity;
+package com.inditex.prices.infraestructure.repository.entity;
 
 
 import lombok.AllArgsConstructor;

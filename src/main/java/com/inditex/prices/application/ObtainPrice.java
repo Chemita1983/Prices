@@ -7,7 +7,6 @@ import com.inditex.prices.api.outbound.PriceResponseDTO;
 import com.inditex.prices.domain.ports.PricesPort;
 import com.inditex.prices.infraestructure.model.PriceDto;
 
-import java.text.ParseException;
 import java.util.List;
 
 public class ObtainPrice {
@@ -24,7 +23,7 @@ public class ObtainPrice {
         this.pricesInboundMapper = pricesInboundMapper;
     }
 
-   public List<PriceResponseDTO> getPriceByFilter(PriceDTO priceDTO) throws ParseException {
+   public List<PriceResponseDTO> getPriceByFilter(PriceDTO priceDTO) {
 
        PriceDto priceDto = pricesInboundMapper.mapToPriceDto(priceDTO);
        return pricesMapperOutput.pricesToDTOs(pricesPort.getPricesByFilter(priceDto));

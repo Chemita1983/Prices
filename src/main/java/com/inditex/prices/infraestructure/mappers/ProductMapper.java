@@ -1,13 +1,12 @@
 package com.inditex.prices.infraestructure.mappers;
 
+import com.inditex.prices.domain.product.*;
 import com.inditex.prices.domain.product.brand.Brand;
 import com.inditex.prices.domain.product.brand.BrandId;
 import com.inditex.prices.domain.product.brand.Name;
-import com.inditex.prices.domain.product.*;
 import com.inditex.prices.infraestructure.repository.entity.BrandVO;
 import com.inditex.prices.infraestructure.repository.entity.PricesVO;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.Date;
 import java.util.List;
@@ -15,8 +14,6 @@ import java.util.stream.Collectors;
 
 @Mapper
 public interface ProductMapper {
-
-    ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
     default Products mapToProducts(List<PricesVO> pricesVOList) {
         List<Product> productList = pricesVOList.stream()
@@ -33,8 +30,7 @@ public interface ProductMapper {
                             new EndDate(pricesVO.getEndDate()),
                             new PriceList(pricesVO.getPriceList()),
                             new Amount(pricesVO.getPrice()));
-   };
-
+   }
 
     default ProductId mapToProductId(Integer productId) {
         return new ProductId(productId);

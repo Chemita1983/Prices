@@ -3,8 +3,6 @@ package com.inditex.prices.domain.product;
 import com.inditex.prices.domain.product.brand.Brand;
 import lombok.Getter;
 
-import java.util.Optional;
-
 @Getter
 public class Product {
 

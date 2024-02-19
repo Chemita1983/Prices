@@ -1,5 +1,8 @@
 package com.inditex.prices.domain.product.brand;
 
+import lombok.Getter;
+
+@Getter
 public class Brand {
 
     private final BrandId brandId;
@@ -13,11 +16,4 @@ public class Brand {
         this.name = name;
     }
 
-    public BrandId getBrandId() {
-        return brandId;
-    }
-
-    public Name getName() {
-        return name;
-    }
 }

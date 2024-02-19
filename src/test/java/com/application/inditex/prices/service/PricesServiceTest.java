@@ -1,19 +1,18 @@
 package com.application.inditex.prices.service;
 
+import com.inditex.prices.domain.exceptions.InvalidDatesException;
+import com.inditex.prices.domain.exceptions.NullValueException;
+import com.inditex.prices.domain.product.*;
 import com.inditex.prices.domain.product.brand.Brand;
 import com.inditex.prices.domain.product.brand.BrandId;
 import com.inditex.prices.domain.product.brand.Name;
-import com.inditex.prices.domain.product.*;
 import com.inditex.prices.infraestructure.adapters.PricesH2Adapter;
+import com.inditex.prices.infraestructure.adapters.validation.ProductValidator;
+import com.inditex.prices.infraestructure.mappers.ProductMapper;
 import com.inditex.prices.infraestructure.model.PriceDto;
+import com.inditex.prices.infraestructure.repository.PricesRepository;
 import com.inditex.prices.infraestructure.repository.entity.BrandVO;
 import com.inditex.prices.infraestructure.repository.entity.PricesVO;
-import com.inditex.prices.domain.exceptions.InvalidDatesException;
-import com.inditex.prices.domain.exceptions.NullValueException;
-import com.inditex.prices.api.inbound.PriceDTO;
-import com.inditex.prices.infraestructure.mappers.ProductMapper;
-import com.inditex.prices.infraestructure.repository.PricesRepository;
-import com.inditex.prices.infraestructure.adapters.validation.ProductValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +28,9 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class PricesServiceTest {
@@ -63,7 +64,7 @@ public class PricesServiceTest {
     @Test
     public void givenCorrectParams_getPricesByService_getPriceResponseDTO() throws ParseException {
 
-        when(productMapperMock.mapToProducts(any(List.class))).thenReturn(getProducts());
+        when(productMapperMock.mapToProducts(anyList())).thenReturn(getProducts());
 
         when(pricesRepositoryMock.findByPriceDTOWithDates(any(PriceDto.class))).thenReturn(getPricesVO());
 
@@ -82,26 +83,22 @@ public class PricesServiceTest {
     }
 
     @Test
-    public void givenNullParamProductId_getPricesByService_throwNullValuesException() throws InvalidDatesException, ParseException, NullValueException {
+    public void givenNullParamProductId_getPricesByService_throwNullValuesException() throws InvalidDatesException, NullValueException {
 
         doThrow(new NullValueException("productId cannot be null")).when(productValidatorMock).validInputPrice(any(PriceDto.class));
 
-        NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () -> {
-            pricesH2Adapter.getPricesByFilter(INVALID_PRICE_DTO);
-        });
+        NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () -> pricesH2Adapter.getPricesByFilter(INVALID_PRICE_DTO));
 
         assertEquals("productId cannot be null", nullValueException.getMessage());
 
     }
 
     @Test
-    public void givenNullParamBrandId_getPricesByService_throwNullValuesException() throws InvalidDatesException, ParseException, NullValueException {
+    public void givenNullParamBrandId_getPricesByService_throwNullValuesException() throws InvalidDatesException, NullValueException {
 
         doThrow(new NullValueException("brandId cannot be null")).when(productValidatorMock).validInputPrice(any(PriceDto.class));
 
-        NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () -> {
-            pricesH2Adapter.getPricesByFilter(INVALID_PRICE_DTO);
-        });
+        NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () -> pricesH2Adapter.getPricesByFilter(INVALID_PRICE_DTO));
 
         assertEquals("brandId cannot be null", nullValueException.getMessage());
 
@@ -112,9 +109,7 @@ public class PricesServiceTest {
 
         doThrow(new InvalidDatesException("start date must be greater than end date")).when(productValidatorMock).validInputPrice(any(PriceDto.class));
 
-        InvalidDatesException invalidDatesException = Assertions.assertThrows(InvalidDatesException.class, () -> {
-            pricesH2Adapter.getPricesByFilter(INVALID_PRICE_DTO);
-        });
+        InvalidDatesException invalidDatesException = Assertions.assertThrows(InvalidDatesException.class, () -> pricesH2Adapter.getPricesByFilter(INVALID_PRICE_DTO));
 
         assertEquals("start date must be greater than end date", invalidDatesException.getMessage());
 

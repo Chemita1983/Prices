@@ -5,12 +5,9 @@ import com.inditex.prices.domain.product.brand.BrandId;
 import com.inditex.prices.domain.product.brand.Name;
 import com.inditex.prices.infraestructure.repository.entity.BrandVO;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface BrandMapper {
-
-    BrandMapper INSTANCE = Mappers.getMapper(BrandMapper.class);
 
     Brand mapToBrand(BrandVO brandVO);
 

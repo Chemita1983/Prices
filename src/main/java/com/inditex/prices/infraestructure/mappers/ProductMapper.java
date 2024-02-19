@@ -10,13 +10,31 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper
 public interface ProductMapper {
 
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
-    Product mapToPrice(PricesVO priceVO);
+    default Products mapToProducts(List<PricesVO> pricesVOList) {
+        List<Product> productList = pricesVOList.stream()
+                .map(this::mapToProduct)
+                .collect(Collectors.toList());
+        return new Products(productList);
+    }
+
+   default Product mapToProduct(PricesVO pricesVO){
+        return  new Product(new ProductId(pricesVO.getProductId()),
+                            new Brand(new BrandId(pricesVO.getBrandId()),
+                                      new Name(pricesVO.getBrand().getName())),
+                            new StartDate(pricesVO.getStartDate()),
+                            new EndDate(pricesVO.getEndDate()),
+                            new PriceList(pricesVO.getPriceList()),
+                            new Amount(pricesVO.getPrice()));
+   };
+
 
     default ProductId mapToProductId(Integer productId) {
         return new ProductId(productId);

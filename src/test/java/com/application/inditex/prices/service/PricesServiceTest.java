@@ -62,21 +62,21 @@ public class PricesServiceTest {
     @Test
     public void givenCorrectParams_getPricesByService_getPriceResponseDTO() throws ParseException {
 
-        when(productMapperMock.mapToPrice(any(PricesVO.class))).thenReturn(getProduct());
+        when(productMapperMock.mapToProducts(any(List.class))).thenReturn(getProducts());
 
         when(pricesRepositoryMock.findByPriceDTOWithDates(any(PriceDTO.class))).thenReturn(getPricesVO());
 
-        List<Product> pricesByFilter = pricesH2Adapter.getPricesByFilter(PRICE_DTO);
+        Products productsByFilter = pricesH2Adapter.getPricesByFilter(PRICE_DTO);
 
-        assertEquals(1, pricesByFilter.size());
+        assertEquals(1, productsByFilter.getContent().size());
 
-        assertThat(pricesByFilter.get(0).getProductId().value()).isEqualTo(35555);
-        assertThat(pricesByFilter.get(0).getBrand().getBrandId().value()).isEqualTo(1);
-        assertThat(pricesByFilter.get(0).getBrand().getName().value()).isEqualTo("test");
-        assertThat(pricesByFilter.get(0).getStartDate().value()).isEqualTo("2020-06-14 00:00:00");
-        assertThat(pricesByFilter.get(0).getEndDate().value()).isEqualTo("2020-06-15 00:00:00");
-        assertThat(pricesByFilter.get(0).getPriceList().value()).isEqualTo(1);
-        assertThat(pricesByFilter.get(0).getPrice().value()).isEqualTo(50.0);
+        assertThat(productsByFilter.getContent().get(0).getProductId().value()).isEqualTo(35555);
+        assertThat(productsByFilter.getContent().get(0).getBrand().getBrandId().value()).isEqualTo(1);
+        assertThat(productsByFilter.getContent().get(0).getBrand().getName().value()).isEqualTo("test");
+        assertThat(productsByFilter.getContent().get(0).getStartDate().value()).isEqualTo("2020-06-14 00:00:00");
+        assertThat(productsByFilter.getContent().get(0).getEndDate().value()).isEqualTo("2020-06-15 00:00:00");
+        assertThat(productsByFilter.getContent().get(0).getPriceList().value()).isEqualTo(1);
+        assertThat(productsByFilter.getContent().get(0).getPrice().value()).isEqualTo(50.0);
 
     }
 
@@ -126,15 +126,15 @@ public class PricesServiceTest {
     }
 
 
-    private Product getProduct() throws ParseException {
+    private Products getProducts() throws ParseException {
 
-        return new Product(
+        return new Products(Collections.singletonList(new Product(
                     new ProductId(35555),
                     new Brand(new BrandId(1), new Name("test")),
                     new StartDate(DATE_FORMAT.parse("2020-06-14 00:00:00")),
                     new EndDate(DATE_FORMAT.parse("2020-06-15 00:00:00")),
                     new PriceList(1),
-                    new Amount(50.0)
+                    new Amount(50.0)))
         );
 
     }

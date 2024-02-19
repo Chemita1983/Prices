@@ -2,7 +2,7 @@ package com.inditex.prices.infraestructure.adapters;
 
 import com.inditex.prices.api.inbound.PriceDTO;
 import com.inditex.prices.domain.ports.PricesPort;
-import com.inditex.prices.domain.product.Product;
+import com.inditex.prices.domain.product.Products;
 import com.inditex.prices.infraestructure.adapters.validation.ProductValidator;
 import com.inditex.prices.infraestructure.repository.entity.PricesVO;
 import com.inditex.prices.infraestructure.mappers.ProductMapper;
@@ -29,7 +29,7 @@ public class PricesH2Adapter implements PricesPort {
     }
 
     @Override
-    public List<Product> getPricesByFilter(PriceDTO priceDTO) {
+    public Products getPricesByFilter(PriceDTO priceDTO) {
         productValidator.validInputPrice(priceDTO);
 
         List<PricesVO> pricesQueryResult = getPricesQuery().invoke(priceDTO);
@@ -37,11 +37,12 @@ public class PricesH2Adapter implements PricesPort {
         return getPrices(pricesQueryResult);
     }
 
-    private List<Product> getPrices(List<PricesVO> pricesResult) {
-        return pricesResult.stream()
+    private Products getPrices(List<PricesVO> pricesResult) {
+        List<PricesVO> prices = pricesResult.stream()
                 .filter(price -> price.getPriority().equals(getPriceResultMaxPriority(pricesResult)))
-                .map(productMapper::mapToPrice)
                 .collect(Collectors.toList());
+
+        return productMapper.mapToProducts(prices);
     }
 
     private Integer getPriceResultMaxPriority(List<PricesVO> priceResult) {

@@ -1,9 +1,9 @@
 package com.application.inditex.prices.controller;
 
-import com.inditex.prices.api.PricesController;
-import com.inditex.prices.api.inbound.PriceDTO;
-import com.inditex.prices.api.outbound.BrandResponseDTO;
-import com.inditex.prices.api.outbound.PriceResponseDTO;
+import com.inditex.prices.infraestructure.inbound.controller.PricesController;
+import com.inditex.prices.infraestructure.inbound.model.PriceDTO;
+import com.inditex.prices.infraestructure.outbound.model.BrandResponseDTO;
+import com.inditex.prices.infraestructure.outbound.model.PriceResponseDTO;
 import com.inditex.prices.application.ObtainPrice;
 import com.inditex.prices.domain.exceptions.InvalidDatesException;
 import com.inditex.prices.domain.exceptions.NullValueException;

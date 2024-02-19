@@ -1,11 +1,11 @@
 package com.inditex.prices.infraestructure.mappers;
 
-import com.inditex.prices.domain.product.*;
-import com.inditex.prices.domain.product.brand.Brand;
-import com.inditex.prices.domain.product.brand.BrandId;
-import com.inditex.prices.domain.product.brand.Name;
-import com.inditex.prices.infraestructure.repository.entity.BrandVO;
-import com.inditex.prices.infraestructure.repository.entity.PricesVO;
+import com.inditex.prices.domain.model.*;
+import com.inditex.prices.domain.model.brand.Brand;
+import com.inditex.prices.domain.model.brand.BrandId;
+import com.inditex.prices.domain.model.brand.Name;
+import com.inditex.prices.infraestructure.outbound.repository.entity.BrandVO;
+import com.inditex.prices.infraestructure.outbound.repository.entity.PricesVO;
 import org.mapstruct.Mapper;
 
 import java.util.Date;

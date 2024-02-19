@@ -1,11 +1,12 @@
 package com.inditex.prices.infraestructure.adapters;
 
-import com.inditex.prices.api.inbound.PriceDTO;
 import com.inditex.prices.domain.ports.PricesPort;
 import com.inditex.prices.domain.product.Products;
 import com.inditex.prices.infraestructure.adapters.validation.ProductValidator;
-import com.inditex.prices.infraestructure.repository.entity.PricesVO;
 import com.inditex.prices.infraestructure.mappers.ProductMapper;
+import com.inditex.prices.infraestructure.model.PriceDto;
+import com.inditex.prices.infraestructure.repository.PricesRepository;
+import com.inditex.prices.infraestructure.repository.entity.PricesVO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -29,10 +30,10 @@ public class PricesH2Adapter implements PricesPort {
     }
 
     @Override
-    public Products getPricesByFilter(PriceDTO priceDTO) {
-        productValidator.validInputPrice(priceDTO);
+    public Products getPricesByFilter(PriceDto priceDto) {
+        productValidator.validInputPrice(priceDto);
 
-        List<PricesVO> pricesQueryResult = getPricesQuery().invoke(priceDTO);
+        List<PricesVO> pricesQueryResult = getPricesQuery().invoke(priceDto);
 
         return getPrices(pricesQueryResult);
     }

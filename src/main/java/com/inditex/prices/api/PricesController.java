@@ -3,7 +3,6 @@ package com.inditex.prices.api;
 import com.inditex.prices.api.inbound.PriceDTO;
 import com.inditex.prices.api.outbound.PriceResponseDTO;
 import com.inditex.prices.application.ObtainPrice;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RestController

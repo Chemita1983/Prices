@@ -5,13 +5,14 @@ import com.inditex.prices.domain.product.brand.BrandId;
 import com.inditex.prices.domain.product.brand.Name;
 import com.inditex.prices.domain.product.*;
 import com.inditex.prices.infraestructure.adapters.PricesH2Adapter;
+import com.inditex.prices.infraestructure.model.PriceDto;
 import com.inditex.prices.infraestructure.repository.entity.BrandVO;
 import com.inditex.prices.infraestructure.repository.entity.PricesVO;
 import com.inditex.prices.domain.exceptions.InvalidDatesException;
 import com.inditex.prices.domain.exceptions.NullValueException;
 import com.inditex.prices.api.inbound.PriceDTO;
 import com.inditex.prices.infraestructure.mappers.ProductMapper;
-import com.inditex.prices.infraestructure.adapters.PricesRepository;
+import com.inditex.prices.infraestructure.repository.PricesRepository;
 import com.inditex.prices.infraestructure.adapters.validation.ProductValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -35,13 +36,13 @@ public class PricesServiceTest {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private static final PriceDTO PRICE_DTO ,INVALID_PRICE_DTO;
+    private static final PriceDto PRICE_DTO ,INVALID_PRICE_DTO;
 
 
     static {
         try {
-            PRICE_DTO = new PriceDTO(35555, 1, DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"));
-            INVALID_PRICE_DTO = new PriceDTO(null, 1,DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"));
+            PRICE_DTO = new PriceDto(35555, 1, DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"));
+            INVALID_PRICE_DTO = new PriceDto(null, 1,DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -64,7 +65,7 @@ public class PricesServiceTest {
 
         when(productMapperMock.mapToProducts(any(List.class))).thenReturn(getProducts());
 
-        when(pricesRepositoryMock.findByPriceDTOWithDates(any(PriceDTO.class))).thenReturn(getPricesVO());
+        when(pricesRepositoryMock.findByPriceDTOWithDates(any(PriceDto.class))).thenReturn(getPricesVO());
 
         Products productsByFilter = pricesH2Adapter.getPricesByFilter(PRICE_DTO);
 
@@ -83,7 +84,7 @@ public class PricesServiceTest {
     @Test
     public void givenNullParamProductId_getPricesByService_throwNullValuesException() throws InvalidDatesException, ParseException, NullValueException {
 
-        doThrow(new NullValueException("productId cannot be null")).when(productValidatorMock).validInputPrice(any(PriceDTO.class));
+        doThrow(new NullValueException("productId cannot be null")).when(productValidatorMock).validInputPrice(any(PriceDto.class));
 
         NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () -> {
             pricesH2Adapter.getPricesByFilter(INVALID_PRICE_DTO);
@@ -96,7 +97,7 @@ public class PricesServiceTest {
     @Test
     public void givenNullParamBrandId_getPricesByService_throwNullValuesException() throws InvalidDatesException, ParseException, NullValueException {
 
-        doThrow(new NullValueException("brandId cannot be null")).when(productValidatorMock).validInputPrice(any(PriceDTO.class));
+        doThrow(new NullValueException("brandId cannot be null")).when(productValidatorMock).validInputPrice(any(PriceDto.class));
 
         NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () -> {
             pricesH2Adapter.getPricesByFilter(INVALID_PRICE_DTO);
@@ -109,7 +110,7 @@ public class PricesServiceTest {
     @Test
     public void givenBadDatesParams_getPricesByService_throwInvalidDatesException() throws InvalidDatesException, NullValueException {
 
-        doThrow(new InvalidDatesException("start date must be greater than end date")).when(productValidatorMock).validInputPrice(any(PriceDTO.class));
+        doThrow(new InvalidDatesException("start date must be greater than end date")).when(productValidatorMock).validInputPrice(any(PriceDto.class));
 
         InvalidDatesException invalidDatesException = Assertions.assertThrows(InvalidDatesException.class, () -> {
             pricesH2Adapter.getPricesByFilter(INVALID_PRICE_DTO);

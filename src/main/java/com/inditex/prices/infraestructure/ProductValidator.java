@@ -5,8 +5,6 @@ import com.inditex.prices.domain.exceptions.InvalidDatesException;
 import com.inditex.prices.domain.exceptions.NullValueException;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 @Component
 public class ProductValidator {
 

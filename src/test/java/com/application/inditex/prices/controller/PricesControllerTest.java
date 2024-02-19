@@ -26,8 +26,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class PricesControllerTest {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     @InjectMocks
     PricesController pricesController;
 
@@ -39,7 +37,7 @@ public class PricesControllerTest {
 
         when(obtainPriceMock.getPriceByFilter(any(PriceDTO.class))).thenReturn(getPriceResponseForTest());
 
-        List<PriceResponseDTO> priceByFilter = pricesController.getPriceByFilter(35555, DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1).getBody();
+        List<PriceResponseDTO> priceByFilter = pricesController.getPriceByFilter(35555, "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1).getBody();
 
         assertThat(priceByFilter).isNotNull();
         assertThat(priceByFilter.size()).isEqualTo(1);
@@ -57,7 +55,7 @@ public class PricesControllerTest {
         when(obtainPriceMock.getPriceByFilter(any(PriceDTO.class))).thenThrow(new NullValueException("ProductId cannot be null"));
 
         NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () -> {
-            pricesController.getPriceByFilter(null,  DATE_FORMAT.parse("2020-06-14 00:00:00"),  DATE_FORMAT.parse("2020-06-15 00:00:00"), 1);
+            pricesController.getPriceByFilter(null,  "2020-06-14 00:00:00",  "2020-06-15 00:00:00", 1);
         });
 
         Assertions.assertEquals("ProductId cannot be null", nullValueException.getMessage());
@@ -69,7 +67,7 @@ public class PricesControllerTest {
         when(obtainPriceMock.getPriceByFilter(any(PriceDTO.class))).thenThrow(new InvalidDatesException("start date must be greater than end date"));
 
         InvalidDatesException invalidDatesException = Assertions.assertThrows(InvalidDatesException.class, () -> {
-            pricesController.getPriceByFilter(35555,  DATE_FORMAT.parse("2020-06-16 00:00:00"),  DATE_FORMAT.parse("2020-06-15 00:00:00"), 1);
+            pricesController.getPriceByFilter(35555,  "2020-06-16 00:00:00",  "2020-06-15 00:00:00", 1);
         });
 
         Assertions.assertEquals("start date must be greater than end date", invalidDatesException.getMessage());

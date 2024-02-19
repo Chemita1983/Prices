@@ -192,6 +192,7 @@ public class PricesControllerIntegrationTest {
                         .param("productId","00000")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-10 21:00:00")
+                        .param("endDate", "2020-12-31 23:59:59")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())

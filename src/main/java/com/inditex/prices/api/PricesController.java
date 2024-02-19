@@ -29,8 +29,8 @@ public class PricesController {
 
     @GetMapping(value = PATH_PRICES, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PriceResponseDTO>> getPriceByFilter(@RequestParam("productId") Integer productId,
-                                                                   @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startDate,
-                                                                   @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endDate,
+                                                                   @RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startDate,
+                                                                   @RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endDate,
                                                                    @RequestParam("brandId") Integer brandId) throws ParseException {
 
         PriceDTO searchFilter = new PriceDTO(productId, brandId, startDate,endDate);

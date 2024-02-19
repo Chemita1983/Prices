@@ -214,7 +214,7 @@ public class PricesControllerIntegrationTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$").value("start date must be greater than end date"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value("start date must be before than end date"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").doesNotExist())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").isEmpty());
     }

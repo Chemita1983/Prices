@@ -1,15 +1,13 @@
 package com.inditex.prices.application;
 
-import com.inditex.prices.application.inbound.PriceDTO;
-import com.inditex.prices.application.mappers.PricesOutboundMapper;
-import com.inditex.prices.application.outbound.PriceResponseDTO;
-import com.inditex.prices.domain.PricesPort;
-import org.springframework.stereotype.Service;
+import com.inditex.prices.api.inbound.PriceDTO;
+import com.inditex.prices.api.mappers.PricesOutboundMapper;
+import com.inditex.prices.api.outbound.PriceResponseDTO;
+import com.inditex.prices.domain.ports.PricesPort;
 
 import java.text.ParseException;
 import java.util.List;
 
-@Service
 public class ObtainPrice {
 
     private final PricesPort pricesPort;

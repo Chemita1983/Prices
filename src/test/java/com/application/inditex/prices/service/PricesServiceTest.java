@@ -9,7 +9,7 @@ import com.inditex.prices.infraestructure.entity.BrandVO;
 import com.inditex.prices.infraestructure.entity.PricesVO;
 import com.inditex.prices.domain.exceptions.InvalidDatesException;
 import com.inditex.prices.domain.exceptions.NullValueException;
-import com.inditex.prices.application.inbound.PriceDTO;
+import com.inditex.prices.api.inbound.PriceDTO;
 import com.inditex.prices.infraestructure.mappers.ProductMapper;
 import com.inditex.prices.infraestructure.PricesRepository;
 import com.inditex.prices.infraestructure.ProductValidator;

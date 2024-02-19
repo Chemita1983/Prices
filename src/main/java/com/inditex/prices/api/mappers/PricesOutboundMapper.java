@@ -1,23 +1,16 @@
-package com.inditex.prices.application.mappers;
+package com.inditex.prices.api.mappers;
 
-import com.inditex.prices.application.outbound.PriceResponseDTO;
+import com.inditex.prices.api.outbound.PriceResponseDTO;
 import com.inditex.prices.domain.product.brand.BrandId;
 import com.inditex.prices.domain.product.brand.Name;
 import com.inditex.prices.domain.product.*;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Mapper
 public interface PricesOutboundMapper {
-    @Mapping(source = "productId", target = "productId")
-    @Mapping(source = "brand", target = "brand")
-    @Mapping(source = "startDate", target = "startDate")
-    @Mapping(source = "endDate", target = "endDate", defaultValue = "null")
-    @Mapping(source = "priceList", target = "priceList")
-    @Mapping(source = "price", target = "price")
     List<PriceResponseDTO> pricesToDTOs(List<Product> price);
 
     default Integer map(ProductId productId){

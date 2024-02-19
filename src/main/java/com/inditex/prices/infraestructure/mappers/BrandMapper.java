@@ -13,8 +13,6 @@ public interface BrandMapper {
 
     BrandMapper INSTANCE = Mappers.getMapper(BrandMapper.class);
 
-    @Mapping(source = "brandId", target = "brandId")
-    @Mapping(source = "name", target = "name")
     Brand mapToBrand(BrandVO brandVO);
 
     default BrandId mapToBrandId(Integer brandId) {

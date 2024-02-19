@@ -1,12 +1,12 @@
 package com.application.inditex.prices.controller;
 
 import com.inditex.prices.application.ObtainPrice;
-import com.inditex.prices.controller.PricesController;
+import com.inditex.prices.api.PricesController;
 import com.inditex.prices.domain.exceptions.InvalidDatesException;
 import com.inditex.prices.domain.exceptions.NullValueException;
-import com.inditex.prices.application.inbound.PriceDTO;
-import com.inditex.prices.application.outbound.BrandResponseDTO;
-import com.inditex.prices.application.outbound.PriceResponseDTO;
+import com.inditex.prices.api.inbound.PriceDTO;
+import com.inditex.prices.api.outbound.BrandResponseDTO;
+import com.inditex.prices.api.outbound.PriceResponseDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

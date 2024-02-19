@@ -1,8 +1,8 @@
-package com.inditex.prices.controller;
+package com.inditex.prices.api;
 
+import com.inditex.prices.api.inbound.PriceDTO;
+import com.inditex.prices.api.outbound.PriceResponseDTO;
 import com.inditex.prices.application.ObtainPrice;
-import com.inditex.prices.application.inbound.PriceDTO;
-import com.inditex.prices.application.outbound.PriceResponseDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

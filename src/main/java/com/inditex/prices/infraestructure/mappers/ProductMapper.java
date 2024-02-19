@@ -17,12 +17,6 @@ public interface ProductMapper {
 
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
-    @Mapping(source = "productId", target = "productId")
-    @Mapping(source = "brand", target = "brand")
-    @Mapping(source = "startDate", target = "startDate")
-    @Mapping(source = "endDate", target = "endDate")
-    @Mapping(source = "priceList", target = "priceList")
-    @Mapping(source = "price", target = "price")
     Product mapToPrice(PricesVO priceVO);
 
     default ProductId mapToProductId(Integer productId) {

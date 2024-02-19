@@ -1,7 +1,7 @@
 package com.inditex.prices.infraestructure;
 
-import com.inditex.prices.application.inbound.PriceDTO;
-import com.inditex.prices.domain.PricesPort;
+import com.inditex.prices.api.inbound.PriceDTO;
+import com.inditex.prices.domain.ports.PricesPort;
 import com.inditex.prices.domain.product.Product;
 import com.inditex.prices.infraestructure.entity.PricesVO;
 import com.inditex.prices.infraestructure.mappers.ProductMapper;
@@ -48,11 +48,6 @@ public class PricesH2Adapter implements PricesPort {
     }
 
     private QueryInvoker getPricesQuery() {
-        return dto -> {
-            if (dto.getStartDate() == null && dto.getEndDate() == null) return pricesRepository.findByPriceDTOWithoutDates(dto);
-            else if (dto.getStartDate() != null && dto.getEndDate() == null) return pricesRepository.findByPriceDTOWithStartDate(dto);
-            else if (dto.getStartDate() == null && dto.getEndDate() != null) return pricesRepository.findByPriceDTOWithEndDate(dto);
-            else return pricesRepository.findByPriceDTOWithDates(dto);
-        };
+        return pricesRepository::findByPriceDTOWithDates;
     }
 }

@@ -1,11 +1,10 @@
-package com.inditex.prices.infraestructure.outbound;
+package com.inditex.prices.infraestructure.database;
 
-import com.inditex.prices.domain.model.Products;
+import com.inditex.prices.domain.model.Product;
+import com.inditex.prices.domain.model.ProductQuery;
 import com.inditex.prices.domain.ports.PricesPort;
-import com.inditex.prices.infraestructure.inbound.model.PriceDTO;
-import com.inditex.prices.infraestructure.mappers.ProductMapper;
-import com.inditex.prices.infraestructure.outbound.repository.PricesRepository;
-import com.inditex.prices.infraestructure.outbound.repository.entity.PricesVO;
+import com.inditex.prices.infraestructure.api.mappers.ProductMapper;
+import com.inditex.prices.infraestructure.database.entity.PricesVO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -14,25 +13,25 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class PricesH2Adapter implements PricesPort {
+public class PricesAdapter implements PricesPort {
 
     private final ProductMapper productMapper;
 
     private final PricesRepository pricesRepository;
 
-    public PricesH2Adapter(ProductMapper productMapper, PricesRepository pricesRepository) {
+    public PricesAdapter(ProductMapper productMapper, PricesRepository pricesRepository) {
         this.productMapper = productMapper;
         this.pricesRepository = pricesRepository;
     }
 
     @Override
-    public Products getPricesByFilter(PriceDTO priceDTO) {
+    public List<Product> getPricesByFilter(ProductQuery priceDTO) {
         List<PricesVO> pricesQueryResult = getPricesQuery().invoke(priceDTO);
 
         return getPrices(pricesQueryResult);
     }
 
-    private Products getPrices(List<PricesVO> pricesResult) {
+    private List<Product> getPrices(List<PricesVO> pricesResult) {
         List<PricesVO> prices = pricesResult.stream()
                 .filter(price -> price.getPriority().equals(getPriceResultMaxPriority(pricesResult)))
                 .collect(Collectors.toList());

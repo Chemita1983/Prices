@@ -1,4 +1,4 @@
-package com.inditex.prices.infraestructure.outbound.model;
+package com.inditex.prices.infraestructure.api.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

@@ -5,7 +5,7 @@ import com.inditex.prices.domain.model.ProductQuery;
 
 import java.util.List;
 
-public interface PricesPort {
+public interface ObtainPrice {
 
-    List<Product> getPricesByFilter(ProductQuery productQuery);
+    List<Product> getPriceByFilter(ProductQuery productQuery);
 }

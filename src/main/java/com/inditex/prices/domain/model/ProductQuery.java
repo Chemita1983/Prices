@@ -1,13 +1,15 @@
-package com.inditex.prices.infraestructure.inbound.model;
+package com.inditex.prices.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
-@AllArgsConstructor
 @Getter
-public class PriceDTO {
+@Setter
+@AllArgsConstructor
+public class ProductQuery {
 
     private Integer productId;
 

@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @EnableConfigurationProperties
 @ActiveProfiles("test")
-public class PricesControllerIntegrationTest {
+public class PricesIntegrationTest {
 
     @Autowired
     private TestConfigurationProperties testConfigurationProperties;
@@ -39,8 +39,8 @@ public class PricesControllerIntegrationTest {
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
                         .param("productId","35455")
-                        .param("startDate", "2020-06-14 10:00:00")
                         .param("brandId", "1")
+                        .param("startDate", "2020-06-14 10:00:00")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -208,6 +208,5 @@ public class PricesControllerIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
-
 }
 

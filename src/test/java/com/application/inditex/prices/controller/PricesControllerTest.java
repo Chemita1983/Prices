@@ -1,13 +1,13 @@
 package com.application.inditex.prices.controller;
 
-import com.inditex.prices.infraestructure.inbound.controller.PricesController;
-import com.inditex.prices.infraestructure.inbound.model.PriceDTO;
-import com.inditex.prices.infraestructure.outbound.model.BrandResponseDTO;
-import com.inditex.prices.infraestructure.outbound.model.PriceResponseDTO;
-import com.inditex.prices.application.ObtainPrice;
-import com.inditex.prices.domain.exceptions.InvalidDatesException;
-import com.inditex.prices.domain.exceptions.NullValueException;
-import org.junit.jupiter.api.Assertions;
+import com.inditex.prices.domain.model.Brand;
+import com.inditex.prices.domain.model.Product;
+import com.inditex.prices.domain.model.ProductQuery;
+import com.inditex.prices.domain.ports.ObtainPrice;
+import com.inditex.prices.infraestructure.api.PricesController;
+import com.inditex.prices.infraestructure.api.mappers.PricesResponseMapper;
+import com.inditex.prices.infraestructure.api.model.BrandResponseDTO;
+import com.inditex.prices.infraestructure.api.model.PriceResponseDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,63 +15,56 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class PricesControllerTest {
 
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     @InjectMocks
     PricesController pricesController;
 
     @Mock
-    ObtainPrice obtainPriceMock;
+    ObtainPrice obtainPriceUseCaseMock;
+
+    @Mock
+    PricesResponseMapper pricesResponseMapper;
 
     @Test
-    public void givenSearchParams_getPriceByFilter_returnsPrices() throws InvalidDatesException, ParseException, NullValueException {
+    public void givenSearchParams_getPriceByFilter_returnsPrices() throws ParseException {
 
-        when(obtainPriceMock.getPriceByFilter(any(PriceDTO.class))).thenReturn(getPriceResponseForTest());
+        when(obtainPriceUseCaseMock.getPriceByFilter(any(ProductQuery.class))).thenReturn(getProductsForTest());
 
-        List<PriceResponseDTO> priceByFilter = pricesController.getPriceByFilter(35555, "2020-06-14 00:00:00", 1).getBody();
+        when(pricesResponseMapper.mapProductsToPricesResponseDTO(any(List.class))).thenReturn(getReponseForTest());
 
-        assertThat(priceByFilter).isNotNull();
-        assertThat(priceByFilter.size()).isEqualTo(1);
+        List<PriceResponseDTO> priceByFilter = pricesController.getPriceByFilter(35555, 1, DATE_FORMAT.parse("2020-06-14 00:00:00")).getBody();
+
+        assertNotNull(priceByFilter);
+        assertEquals(1, priceByFilter.size());
         assertThat(priceByFilter.get(0).getProductId()).isEqualTo(35555);
         assertThat(priceByFilter.get(0).getStartDate()).isEqualTo("2020-06-14 00:00:00");
         assertThat(priceByFilter.get(0).getEndDate()).isEqualTo("2020-06-15 00:00:00");
         assertThat(priceByFilter.get(0).getBrand().getBrandId()).isEqualTo(1);
         assertThat(priceByFilter.get(0).getBrand().getName()).isEqualTo("ZARA");
+        assertThat(priceByFilter.get(0).getPrice()).isEqualTo(30.50);
+        assertThat(priceByFilter.get(0).getPriceList()).isEqualTo(1);
+        assertThat(priceByFilter.get(0).getPrice()).isEqualTo(30.50);
     }
 
-
-    @Test
-    public void givenBadSearchParams_getPriceByFilter_returnException() throws InvalidDatesException, NullValueException {
-
-        when(obtainPriceMock.getPriceByFilter(any(PriceDTO.class))).thenThrow(new NullValueException("ProductId cannot be null"));
-
-        NullValueException nullValueException = Assertions.assertThrows(NullValueException.class, () ->
-                pricesController.getPriceByFilter(null,  "2020-06-14 00:00:00",  1));
-
-        Assertions.assertEquals("ProductId cannot be null", nullValueException.getMessage());
+    private List<Product> getProductsForTest() throws ParseException {
+        return Collections.singletonList(new Product(35555, new Brand(1, "ZARA"), DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 30.50));
     }
 
-    @Test
-    public void givenBadDatesParams_getPriceByFilter_returnException() throws InvalidDatesException, NullValueException {
-
-        when(obtainPriceMock.getPriceByFilter(any(PriceDTO.class))).thenThrow(new InvalidDatesException("start date must be greater than end date"));
-
-        InvalidDatesException invalidDatesException = Assertions.assertThrows(InvalidDatesException.class, () ->
-            pricesController.getPriceByFilter(35555,  "2020-06-16 00:00:00",  1));
-
-        Assertions.assertEquals("start date must be greater than end date", invalidDatesException.getMessage());
-    }
-
-
-    private List<PriceResponseDTO> getPriceResponseForTest() {
+    private List<PriceResponseDTO> getReponseForTest() throws ParseException {
         return Collections.singletonList(new PriceResponseDTO(35555, new BrandResponseDTO(1, "ZARA"), "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1, 30.50));
     }
 }

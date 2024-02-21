@@ -1,4 +1,4 @@
-package com.inditex.prices.infraestructure.outbound.model;
+package com.inditex.prices.infraestructure.api.model;
 
 
 import lombok.AllArgsConstructor;

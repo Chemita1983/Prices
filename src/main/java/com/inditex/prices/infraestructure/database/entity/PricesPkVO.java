@@ -1,4 +1,4 @@
-package com.inditex.prices.infraestructure.outbound.repository.entity;
+package com.inditex.prices.infraestructure.database.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

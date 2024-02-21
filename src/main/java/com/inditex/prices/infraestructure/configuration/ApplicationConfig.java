@@ -1,7 +1,6 @@
 package com.inditex.prices.infraestructure.configuration;
 
-import com.inditex.prices.infraestructure.mappers.PricesOutboundMapper;
-import com.inditex.prices.application.ObtainPrice;
+import com.inditex.prices.application.usecase.ObtainPriceUseCase;
 import com.inditex.prices.domain.ports.PricesPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationConfig {
 
     @Bean
-    public ObtainPrice obtainPrice(PricesPort pricesPort, PricesOutboundMapper pricesMapperOutput) {
-        return new ObtainPrice(pricesPort, pricesMapperOutput);
+    public ObtainPriceUseCase obtainPrice(PricesPort pricesPort) {
+        return new ObtainPriceUseCase(pricesPort);
     }
 }

@@ -53,7 +53,7 @@ public class PricesControllerTest {
         assertThat(priceByFilter.get(0).getProductId()).isEqualTo(35555);
         assertThat(priceByFilter.get(0).getStartDate()).isEqualTo("2020-06-14 00:00:00");
         assertThat(priceByFilter.get(0).getEndDate()).isEqualTo("2020-06-15 00:00:00");
-        assertThat(priceByFilter.get(0).getBrand().getBrandId()).isEqualTo(1);
+        assertThat(priceByFilter.get(0).getBrand().getId()).isEqualTo(1);
         assertThat(priceByFilter.get(0).getBrand().getName()).isEqualTo("ZARA");
         assertThat(priceByFilter.get(0).getPrice()).isEqualTo(30.50);
         assertThat(priceByFilter.get(0).getPriceList()).isEqualTo(1);

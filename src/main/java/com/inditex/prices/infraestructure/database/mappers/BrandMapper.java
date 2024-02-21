@@ -8,12 +8,4 @@ import org.mapstruct.Mapper;
 public interface BrandMapper {
 
     Brand mapToBrand(BrandVO brandVO);
-
-    default Integer mapToBrandId(Integer brandId) {
-        return brandId;
-    }
-
-    default String mapToName(String name) {
-        return name;
-    }
 }

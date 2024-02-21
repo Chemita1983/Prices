@@ -18,7 +18,7 @@ public class BrandVO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Integer brandId;
+    private Integer id;
 
     private String name;
 }

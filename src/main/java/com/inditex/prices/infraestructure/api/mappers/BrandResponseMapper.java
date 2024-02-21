@@ -7,12 +7,4 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface BrandResponseMapper {
     BrandResponseDTO brandToDTO(Brand brand);
-
-    default Integer mapBrandId(Integer brandId){
-        return brandId;
-    }
-
-    default String mapName(String name){
-        return name;
-    }
 }

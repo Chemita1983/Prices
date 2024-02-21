@@ -51,7 +51,7 @@ public class PricesIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].priceList").value("2"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].price").value("25.45"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].startDate").value("2020-06-14 15:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.brandId").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.id").value("1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.name").value("ZARA"))
 
 
@@ -59,14 +59,14 @@ public class PricesIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].priceList").value("3"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].price").value("30.5"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].startDate").value("2020-06-15 00:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.brandId").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.id").value("1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.name").value("ZARA"))
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[2].productId").value("35455"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[2].priceList").value("4"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[2].price").value("38.95"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[2].startDate").value("2020-06-15 16:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[2].brand.brandId").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[2].brand.id").value("1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[2].brand.name").value("ZARA"));
     }
 
@@ -90,7 +90,7 @@ public class PricesIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].priceList").value("3"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].price").value("30.5"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].startDate").value("2020-06-15 00:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.brandId").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.id").value("1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.name").value("ZARA"))
 
 
@@ -98,7 +98,7 @@ public class PricesIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].priceList").value("4"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].price").value("38.95"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].startDate").value("2020-06-15 16:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.brandId").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.id").value("1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.name").value("ZARA"));
 
     }
@@ -123,7 +123,7 @@ public class PricesIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].priceList").value("3"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].price").value("30.5"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].startDate").value("2020-06-15 00:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.brandId").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.id").value("1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.name").value("ZARA"))
 
 
@@ -131,7 +131,7 @@ public class PricesIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].priceList").value("4"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].price").value("38.95"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].startDate").value("2020-06-15 16:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.brandId").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.id").value("1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.name").value("ZARA"));
 
     }
@@ -156,7 +156,7 @@ public class PricesIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].priceList").value("4"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].price").value("38.95"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].startDate").value("2020-06-15 16:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.brandId").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.id").value("1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.name").value("ZARA"));
     }
 

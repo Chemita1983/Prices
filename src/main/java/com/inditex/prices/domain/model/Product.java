@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Product {
 
-    private final Integer productId;
+    private final Integer id;
 
     private final Brand brand;
 

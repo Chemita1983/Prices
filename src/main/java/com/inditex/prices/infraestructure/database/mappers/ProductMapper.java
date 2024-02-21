@@ -1,4 +1,4 @@
-package com.inditex.prices.infraestructure.api.mappers;
+package com.inditex.prices.infraestructure.database.mappers;
 
 import com.inditex.prices.domain.model.Product;
 import com.inditex.prices.domain.model.Brand;

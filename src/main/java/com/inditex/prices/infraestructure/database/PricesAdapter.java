@@ -3,7 +3,7 @@ package com.inditex.prices.infraestructure.database;
 import com.inditex.prices.domain.model.Product;
 import com.inditex.prices.domain.model.ProductQuery;
 import com.inditex.prices.domain.ports.PricesPort;
-import com.inditex.prices.infraestructure.api.mappers.ProductMapper;
+import com.inditex.prices.infraestructure.database.mappers.ProductMapper;
 import com.inditex.prices.infraestructure.database.entity.PricesVO;
 import org.springframework.stereotype.Service;
 

@@ -32,13 +32,13 @@ public class PricesIntegrationTest {
     private MockMvc mvc;
 
     @Test
-    public void given_PricesDTOCustom1_getPriceByFilter_ReturnsPricesCustom1() throws Exception {
+    public void given_ProductQueryCustom1_getPriceByFilter_ReturnsPricesCustom1() throws Exception {
 
         // Test 1: petición a las 10:00 del día 14 del producto 35455 para la brand 1 (ZARA)
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
-                        .param("productId","35455")
+                        .param("productId", "35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-14 10:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -71,13 +71,13 @@ public class PricesIntegrationTest {
     }
 
     @Test
-    public void given_PricesDTOCustom2_getPriceByFilter_ReturnsPricesCustom2() throws Exception {
+    public void given_ProductQueryCustom2_getPriceByFilter_ReturnsPricesCustom2() throws Exception {
 
         // Test 2: petición a las 16:00 del día 14 del producto 35455 para la brand 1 (ZARA)
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
-                        .param("productId","35455")
+                        .param("productId", "35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-14 16:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -104,13 +104,13 @@ public class PricesIntegrationTest {
     }
 
     @Test
-    public void given_PricesDTOCustom3_getPriceByFilter_ReturnsPricesCustom3() throws Exception {
+    public void given_ProductQueryCustom3_getPriceByFilter_ReturnsPricesCustom3() throws Exception {
 
         //  Test 3: petición a las 21:00 del día 14 del producto 35455 para la brand 1 (ZARA)
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
-                        .param("productId","35455")
+                        .param("productId", "35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-14 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -137,13 +137,13 @@ public class PricesIntegrationTest {
     }
 
     @Test
-    public void given_PricesDTOCustom4_getPriceByFilter_ReturnsPricesCustom4() throws Exception {
+    public void given_ProductQueryCustom4_getPriceByFilter_ReturnsPricesCustom4() throws Exception {
 
         //  Test 4: petición a las 10:00 del día 15 del producto 35455 para la brand 1 (ZARA)
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
-                        .param("productId","35455")
+                        .param("productId", "35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-15 10:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -161,13 +161,13 @@ public class PricesIntegrationTest {
     }
 
     @Test
-    public void given_PricesDTOCustom5_getPriceByFilter_ReturnsPricesCustom5() throws Exception {
+    public void given_ProductQueryCustom5_getPriceByFilter_ReturnsPricesCustom5() throws Exception {
 
         //  Test 5: petición a las 21:00 del día 16 del producto 35455 para la brand 1 (ZARA)
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
-                        .param("productId","35455")
+                        .param("productId", "35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-16 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -178,13 +178,13 @@ public class PricesIntegrationTest {
     }
 
     @Test
-    public void given_PricesDTOWithOtherProductID_getPriceByFilter_ReturnsEmptyResponse() throws Exception {
+    public void given_ProductQueryWithOtherProductID_getPriceByFilter_ReturnsEmptyResponse() throws Exception {
 
         //  Test 6: Producto no encontrado
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
-                        .param("productId","00000")
+                        .param("productId", "00000")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-10 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -201,12 +201,99 @@ public class PricesIntegrationTest {
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri() + "/prices")
-                        .param("productId","35555")
+                        .param("productId", "35555")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-16 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void given_ProductQueryWithNullProductId_getPriceByFilter_ThrowsException() throws Exception {
+
+        //  Test 9: ProductId null
+
+        mvc.perform(MockMvcRequestBuilders
+                        .get(testConfigurationProperties.getUri())
+                        .param("brandId", "1")
+                        .param("startDate", "2020-06-16 21:00:00")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void given_ProductQueryWithNullBrandId_getPriceByFilter_ThrowsException() throws Exception {
+
+        //  Test 10: BrandId null
+
+        mvc.perform(MockMvcRequestBuilders
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId", "35555")
+                        .param("startDate", "2020-06-16 21:00:00")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void given_ProductQueryWithNullStartDate_getPriceByFilter_ThrowsException() throws Exception {
+
+        //  Test 11: startDate null
+
+        mvc.perform(MockMvcRequestBuilders
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId", "35555")
+                        .param("brandId", "1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void given_ProductQueryWithBadFormatProductId_getPriceByFilter_ThrowsException() throws Exception {
+
+        //  Test 12: Bad format productId
+
+        mvc.perform(MockMvcRequestBuilders
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId", "Formato mal")
+                        .param("brandId", "1")
+                        .param("startDate", "2020-06-16 21:00:00")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void given_ProductQueryWithBadFormatBrandId_getPriceByFilter_ThrowsException() throws Exception {
+
+        //  Test 13: Bad format brandId
+
+        mvc.perform(MockMvcRequestBuilders
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId", "35555")
+                        .param("brandId", "Formato mal")
+                        .param("startDate", "2020-06-16 21:00:00")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void given_ProductQueryWithBadFormatDate_getPriceByFilter_ThrowsException() throws Exception {
+
+        //  Test 14: Bad format startDate
+
+        mvc.perform(MockMvcRequestBuilders
+                        .get(testConfigurationProperties.getUri())
+                        .param("productId", "35555")
+                        .param("brandId", "1")
+                        .param("startDate", "Formato mal")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 }
 

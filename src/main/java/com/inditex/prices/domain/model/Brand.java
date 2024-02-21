@@ -1,19 +1,13 @@
 package com.inditex.prices.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class Brand {
 
-    private final Integer brandId;
+    private final Integer id;
 
     private final String name;
-
-    public Brand(Integer brandId, String name) {
-        if(brandId == null) throw new IllegalArgumentException(" brandId cannot be null");
-        if(name == null) throw new IllegalArgumentException(" name cannot be null");
-        this.brandId = brandId;
-        this.name = name;
-    }
-
 }

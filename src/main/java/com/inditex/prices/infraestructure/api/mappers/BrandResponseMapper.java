@@ -5,7 +5,7 @@ import com.inditex.prices.infraestructure.api.model.BrandResponseDTO;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface BrandOutboundMapper {
+public interface BrandResponseMapper {
     BrandResponseDTO brandToDTO(Brand brand);
 
     default Integer mapBrandId(Integer brandId){

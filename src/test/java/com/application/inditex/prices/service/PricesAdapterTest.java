@@ -2,7 +2,7 @@ package com.application.inditex.prices.service;
 
 import com.inditex.prices.domain.model.*;
 import com.inditex.prices.domain.model.Brand;
-import com.inditex.prices.infraestructure.api.mappers.ProductMapper;
+import com.inditex.prices.infraestructure.database.mappers.ProductMapper;
 import com.inditex.prices.infraestructure.database.PricesAdapter;
 import com.inditex.prices.infraestructure.database.PricesRepository;
 import com.inditex.prices.infraestructure.database.entity.BrandVO;
@@ -63,8 +63,8 @@ public class PricesAdapterTest {
 
         assertEquals(1, productsByFilter.size());
 
-        assertThat(productsByFilter.get(0).getProductId()).isEqualTo(35555);
-        assertThat(productsByFilter.get(0).getBrand().getBrandId()).isEqualTo(1);
+        assertThat(productsByFilter.get(0).getId()).isEqualTo(35555);
+        assertThat(productsByFilter.get(0).getBrand().getId()).isEqualTo(1);
         assertThat(productsByFilter.get(0).getBrand().getName()).isEqualTo("test");
         assertThat(productsByFilter.get(0).getStartDate()).isEqualTo("2020-06-14 00:00:00");
         assertThat(productsByFilter.get(0).getEndDate()).isEqualTo("2020-06-15 00:00:00");

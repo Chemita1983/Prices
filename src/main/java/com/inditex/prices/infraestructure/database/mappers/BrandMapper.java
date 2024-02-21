@@ -1,4 +1,4 @@
-package com.inditex.prices.infraestructure.api.mappers;
+package com.inditex.prices.infraestructure.database.mappers;
 
 import com.inditex.prices.domain.model.Brand;
 import com.inditex.prices.infraestructure.database.entity.BrandVO;
@@ -17,4 +17,3 @@ public interface BrandMapper {
         return name;
     }
 }
-

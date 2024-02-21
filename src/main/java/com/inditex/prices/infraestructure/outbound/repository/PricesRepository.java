@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface PricesRepository extends JpaRepository<PricesVO, Integer> {
      @Query("SELECT p FROM PricesVO p WHERE p.productId = :#{#priceDTO.productId} AND p.brandId = :#{#priceDTO.brandId} " +
-             "AND p.startDate >= :#{#priceDTO.startDate} AND p.endDate <= :#{#priceDTO.endDate}")
+             "AND p.startDate >= :#{#priceDTO.startDate}")
      List<PricesVO> findByPriceDTOWithDates(@Param("priceDTO") PriceDTO priceDTO);
 
 }

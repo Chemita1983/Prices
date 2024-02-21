@@ -14,6 +14,4 @@ public class PriceDTO {
     private Integer brandId;
 
     private Date startDate;
-
-    private Date endDate;
 }

@@ -25,7 +25,7 @@ public class Product {
         if(endDate == null) throw new IllegalArgumentException("endDate cannot be null");
         if(priceList == null) throw new IllegalArgumentException("priceList cannot be null");
         if(price == null) throw new IllegalArgumentException("amount cannot be null");
-        if(startDate.value().after(endDate.value())) throw new IllegalArgumentException("start date must be greater than end date ");
+        if(startDate.value().after(endDate.value())) throw new IllegalArgumentException("start date must be greater than end date");
         this.productId = productId;
         this.brand = brand;
         this.startDate = startDate;

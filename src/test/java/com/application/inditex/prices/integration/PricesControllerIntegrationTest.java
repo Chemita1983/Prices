@@ -40,7 +40,6 @@ public class PricesControllerIntegrationTest {
                         .get(testConfigurationProperties.getUri())
                         .param("productId","35455")
                         .param("startDate", "2020-06-14 10:00:00")
-                        .param("endDate", "2020-12-31 23:59:59")
                         .param("brandId", "1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -81,7 +80,6 @@ public class PricesControllerIntegrationTest {
                         .param("productId","35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-14 16:00:00")
-                        .param("endDate", "2020-12-31 23:59:59")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -115,7 +113,6 @@ public class PricesControllerIntegrationTest {
                         .param("productId","35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-14 21:00:00")
-                        .param("endDate", "2020-12-31 23:59:59")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -149,7 +146,6 @@ public class PricesControllerIntegrationTest {
                         .param("productId","35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-15 10:00:00")
-                        .param("endDate", "2020-12-31 23:59:59")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -174,7 +170,6 @@ public class PricesControllerIntegrationTest {
                         .param("productId","35455")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-16 21:00:00")
-                        .param("endDate", "2020-12-31 23:59:59")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -192,33 +187,12 @@ public class PricesControllerIntegrationTest {
                         .param("productId","00000")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-10 21:00:00")
-                        .param("endDate", "2020-12-31 23:59:59")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").doesNotExist())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").isEmpty());
     }
-
-    @Test
-    public void given_PricesDTOCustomWithBadDates_getPriceByFilter_ReturnsBadRequestException() throws Exception {
-
-        //  Test 7: Fechas invalidas
-
-        mvc.perform(MockMvcRequestBuilders
-                        .get(testConfigurationProperties.getUri())
-                        .param("productId","35455")
-                        .param("brandId", "1")
-                        .param("startDate", "2020-06-16 21:00:00")
-                        .param("endDate", "2020-06-15 21:00:00")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$").value("start date must be before than end date"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").doesNotExist())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").isEmpty());
-    }
-
 
     @Test
     public void given_BadUrl_getPriceByFilter_ReturnsNotFoundException() throws Exception {

@@ -31,12 +31,11 @@ public class PricesController {
     @GetMapping(value = PATH_PRICES, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PriceResponseDTO>> getPriceByFilter(@RequestParam("productId") Integer productId,
                                                                    @RequestParam(value = "startDate")  String startDate,
-                                                                   @RequestParam(value = "endDate") String endDate,
                                                                    @RequestParam("brandId") Integer brandId) throws ParseException {
 
 
 
-        PriceDTO searchFilter = new PriceDTO(productId, brandId, DATE_FORMAT.parse(startDate),DATE_FORMAT.parse(endDate));
+        PriceDTO searchFilter = new PriceDTO(productId, brandId, DATE_FORMAT.parse(startDate));
 
         return new ResponseEntity<>(obtainPrice.getPriceByFilter(searchFilter), HttpStatus.OK);
     }

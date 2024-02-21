@@ -1,10 +1,9 @@
 package com.inditex.prices.infraestructure.outbound;
 
-import com.inditex.prices.domain.ports.PricesPort;
 import com.inditex.prices.domain.model.Products;
-import com.inditex.prices.infraestructure.mappers.ProductMapper;
+import com.inditex.prices.domain.ports.PricesPort;
 import com.inditex.prices.infraestructure.inbound.model.PriceDTO;
-import com.inditex.prices.infraestructure.outbound.validation.ProductValidator;
+import com.inditex.prices.infraestructure.mappers.ProductMapper;
 import com.inditex.prices.infraestructure.outbound.repository.PricesRepository;
 import com.inditex.prices.infraestructure.outbound.repository.entity.PricesVO;
 import org.springframework.stereotype.Service;
@@ -19,20 +18,15 @@ public class PricesH2Adapter implements PricesPort {
 
     private final ProductMapper productMapper;
 
-    private final ProductValidator productValidator;
-
     private final PricesRepository pricesRepository;
 
-    public PricesH2Adapter(ProductMapper productMapper, ProductValidator productValidator, PricesRepository pricesRepository) {
+    public PricesH2Adapter(ProductMapper productMapper, PricesRepository pricesRepository) {
         this.productMapper = productMapper;
-        this.productValidator = productValidator;
         this.pricesRepository = pricesRepository;
     }
 
     @Override
     public Products getPricesByFilter(PriceDTO priceDTO) {
-        productValidator.validInputPrice(priceDTO);
-
         List<PricesVO> pricesQueryResult = getPricesQuery().invoke(priceDTO);
 
         return getPrices(pricesQueryResult);

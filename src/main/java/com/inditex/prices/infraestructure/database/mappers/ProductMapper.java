@@ -5,12 +5,8 @@ import com.inditex.prices.domain.model.Product;
 import com.inditex.prices.infraestructure.database.entity.PricesVO;
 import org.mapstruct.Mapper;
 
-import java.util.List;
-
 @Mapper
 public interface ProductMapper {
-
-   List<Product> mapToProducts(List<PricesVO> pricesVOList);
 
     default Product mapToProduct(PricesVO pricesVO) {
         return new Product(pricesVO.getProductId(),

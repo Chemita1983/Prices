@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 @RestController
 public class PricesController {
@@ -34,7 +33,7 @@ public class PricesController {
 
 
     @GetMapping(value = PATH_PRICES, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PriceResponseDTO>> getPriceByFilter(@NotNull @RequestParam("productId") Integer productId,
+    public ResponseEntity<PriceResponseDTO> getPriceByFilter(@NotNull @RequestParam("productId") Integer productId,
                                                                    @NotNull @RequestParam("brandId") Integer brandId,
                                                                    @Parameter(description = "Start date format: yyyy-MM-dd HH:mm:ss")
                                                                    @NotBlank @RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startDate) {
@@ -42,9 +41,11 @@ public class PricesController {
 
         ProductQuery productQuery = new ProductQuery(productId, brandId, startDate);
 
-        List<Product> productsWithPrices = obtainPrice.getPriceByFilter(productQuery);
+        Product productsWithPrices = obtainPrice.getPriceByFilter(productQuery);
 
-        return new ResponseEntity<>(pricesResponseMapper.mapProductsToPricesResponseDTO(productsWithPrices), HttpStatus.OK);
+        PriceResponseDTO priceResponseDTO = pricesResponseMapper.mapProductToPriceResponseDTO(productsWithPrices);
+
+        return priceResponseDTO != null ? new ResponseEntity<>(priceResponseDTO, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }
 

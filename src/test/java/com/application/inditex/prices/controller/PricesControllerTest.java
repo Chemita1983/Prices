@@ -16,11 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -42,29 +39,28 @@ public class PricesControllerTest {
     @Test
     public void givenSearchParams_getPriceByFilter_returnsPrices() throws ParseException {
 
-        when(obtainPriceUseCaseMock.getPriceByFilter(any(ProductQuery.class))).thenReturn(getProductsForTest());
+        when(obtainPriceUseCaseMock.getPriceByFilter(any(ProductQuery.class))).thenReturn(getProductForTest());
 
-        when(pricesResponseMapper.mapProductsToPricesResponseDTO(any(List.class))).thenReturn(getReponseForTest());
+        when(pricesResponseMapper.mapProductToPriceResponseDTO(any(Product.class))).thenReturn(getReponseForTest());
 
-        List<PriceResponseDTO> priceByFilter = pricesController.getPriceByFilter(35555, 1, DATE_FORMAT.parse("2020-06-14 00:00:00")).getBody();
+        PriceResponseDTO priceByFilter = pricesController.getPriceByFilter(35555, 1, DATE_FORMAT.parse("2020-06-14 00:00:00")).getBody();
 
         assertNotNull(priceByFilter);
-        assertEquals(1, priceByFilter.size());
-        assertThat(priceByFilter.get(0).getProductId()).isEqualTo(35555);
-        assertThat(priceByFilter.get(0).getStartDate()).isEqualTo("2020-06-14 00:00:00");
-        assertThat(priceByFilter.get(0).getEndDate()).isEqualTo("2020-06-15 00:00:00");
-        assertThat(priceByFilter.get(0).getBrand().getId()).isEqualTo(1);
-        assertThat(priceByFilter.get(0).getBrand().getName()).isEqualTo("ZARA");
-        assertThat(priceByFilter.get(0).getPrice()).isEqualTo(30.50);
-        assertThat(priceByFilter.get(0).getPriceList()).isEqualTo(1);
-        assertThat(priceByFilter.get(0).getPrice()).isEqualTo(30.50);
+        assertThat(priceByFilter.getProductId()).isEqualTo(35555);
+        assertThat(priceByFilter.getStartDate()).isEqualTo("2020-06-14 00:00:00");
+        assertThat(priceByFilter.getEndDate()).isEqualTo("2020-06-15 00:00:00");
+        assertThat(priceByFilter.getBrand().getId()).isEqualTo(1);
+        assertThat(priceByFilter.getBrand().getName()).isEqualTo("ZARA");
+        assertThat(priceByFilter.getPrice()).isEqualTo(30.50);
+        assertThat(priceByFilter.getPriceList()).isEqualTo(1);
+        assertThat(priceByFilter.getPrice()).isEqualTo(30.50);
     }
 
-    private List<Product> getProductsForTest() throws ParseException {
-        return Collections.singletonList(new Product(35555, new Brand(1, "ZARA"), DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 30.50));
+    private Product getProductForTest() throws ParseException {
+        return new Product(35555, new Brand(1, "ZARA"), DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 30.50);
     }
 
-    private List<PriceResponseDTO> getReponseForTest() throws ParseException {
-        return Collections.singletonList(new PriceResponseDTO(35555, new BrandResponseDTO(1, "ZARA"), "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1, 30.50));
+    private PriceResponseDTO getReponseForTest() throws ParseException {
+        return new PriceResponseDTO(35555, new BrandResponseDTO(1, "ZARA"), "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1, 30.50);
     }
 }

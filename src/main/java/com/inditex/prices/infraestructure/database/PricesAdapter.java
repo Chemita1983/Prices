@@ -3,13 +3,12 @@ package com.inditex.prices.infraestructure.database;
 import com.inditex.prices.domain.model.Product;
 import com.inditex.prices.domain.model.ProductQuery;
 import com.inditex.prices.domain.ports.PricesPort;
-import com.inditex.prices.infraestructure.database.mappers.ProductMapper;
 import com.inditex.prices.infraestructure.database.entity.PricesVO;
+import com.inditex.prices.infraestructure.database.mappers.ProductMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -25,23 +24,20 @@ public class PricesAdapter implements PricesPort {
     }
 
     @Override
-    public List<Product> getPricesByFilter(ProductQuery priceDTO) {
+    public Product getPricesByFilter(ProductQuery priceDTO) {
         List<PricesVO> pricesQueryResult = getPricesQuery().invoke(priceDTO);
 
         return getPrices(pricesQueryResult);
     }
 
-    private List<Product> getPrices(List<PricesVO> pricesResult) {
-        List<PricesVO> prices = pricesResult.stream()
-                .filter(price -> price.getPriority().equals(getPriceResultMaxPriority(pricesResult)))
-                .collect(Collectors.toList());
+    private Product getPrices(List<PricesVO> pricesResult) {
+        return pricesResult.stream()
+                .max(Comparator.comparing(PricesVO::getPriority))
+                .map(productMapper::mapToProduct)
+                .orElse(null);
 
-        return productMapper.mapToProducts(prices);
     }
 
-    private Integer getPriceResultMaxPriority(List<PricesVO> priceResult) {
-        return Collections.max(priceResult.stream().map(PricesVO::getPriority).collect(Collectors.toList()));
-    }
 
     private QueryBuilder getPricesQuery() {
         return pricesRepository::findByPriceDTOWithDates;

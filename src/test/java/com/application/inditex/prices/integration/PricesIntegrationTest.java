@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,29 +44,14 @@ public class PricesIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]", hasSize(3)))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].productId").value("35455"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].priceList").value("2"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].price").value("25.45"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].startDate").value("2020-06-14 15:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.id").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.name").value("ZARA"))
-
-
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].productId").value("35455"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].priceList").value("3"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].price").value("30.5"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].startDate").value("2020-06-15 00:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.id").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.name").value("ZARA"))
-
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[2].productId").value("35455"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[2].priceList").value("4"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[2].price").value("38.95"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[2].startDate").value("2020-06-15 16:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[2].brand.id").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[2].brand.name").value("ZARA"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.productId").value("35455"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.priceList").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value("35.5"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.startDate").value("2020-06-14 00:00:00"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.endDate").value("2020-12-31 23:59:59"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.brand.id").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.brand.name").value("ZARA"));
     }
 
     @Test
@@ -84,22 +68,14 @@ public class PricesIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]", hasSize(2)))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].productId").value("35455"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].priceList").value("3"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].price").value("30.5"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].startDate").value("2020-06-15 00:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.id").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.name").value("ZARA"))
-
-
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].productId").value("35455"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].priceList").value("4"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].price").value("38.95"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].startDate").value("2020-06-15 16:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.id").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.name").value("ZARA"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.productId").value("35455"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.priceList").value("2"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value("25.45"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.startDate").value("2020-06-14 15:00:00"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.endDate").value("2020-06-14 18:30:00"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.brand.id").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.brand.name").value("ZARA"));
 
     }
 
@@ -117,23 +93,14 @@ public class PricesIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]", hasSize(2)))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].productId").value("35455"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].priceList").value("3"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].price").value("30.5"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].startDate").value("2020-06-15 00:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.id").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.name").value("ZARA"))
-
-
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].productId").value("35455"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].priceList").value("4"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].price").value("38.95"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].startDate").value("2020-06-15 16:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.id").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].brand.name").value("ZARA"));
-
+                .andExpect(MockMvcResultMatchers.jsonPath("$.productId").value("35455"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.priceList").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value("35.5"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.startDate").value("2020-06-14 00:00:00"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.endDate").value("2020-12-31 23:59:59"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.brand.id").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.brand.name").value("ZARA"));
     }
 
     @Test
@@ -150,14 +117,14 @@ public class PricesIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]", hasSize(1)))
 
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].productId").value("35455"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].priceList").value("4"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].price").value("38.95"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].startDate").value("2020-06-15 16:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.id").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].brand.name").value("ZARA"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.productId").value("35455"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.priceList").value("3"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value("30.5"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.startDate").value("2020-06-15 00:00:00"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.endDate").value("2020-06-15 11:00:00"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.brand.id").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.brand.name").value("ZARA"));
     }
 
     @Test
@@ -173,8 +140,13 @@ public class PricesIntegrationTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").doesNotExist())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").isEmpty());
+                .andExpect(MockMvcResultMatchers.jsonPath("$.productId").value("35455"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.priceList").value("4"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value("38.95"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.startDate").value("2020-06-15 16:00:00"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.endDate").value("2020-12-31 23:59:59"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.brand.id").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.brand.name").value("ZARA"));
     }
 
     @Test
@@ -189,9 +161,7 @@ public class PricesIntegrationTest {
                         .param("startDate", "2020-06-10 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").doesNotExist())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").isEmpty());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -258,7 +228,7 @@ public class PricesIntegrationTest {
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
-                        .param("productId", "Formato mal")
+                        .param("productId", "Bad formatZZzz")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-16 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))
@@ -274,7 +244,7 @@ public class PricesIntegrationTest {
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
                         .param("productId", "35555")
-                        .param("brandId", "Formato mal")
+                        .param("brandId", "Bad format")
                         .param("startDate", "2020-06-16 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -290,7 +260,7 @@ public class PricesIntegrationTest {
                         .get(testConfigurationProperties.getUri())
                         .param("productId", "35555")
                         .param("brandId", "1")
-                        .param("startDate", "Formato mal")
+                        .param("startDate", "Bad format")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest());

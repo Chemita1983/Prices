@@ -7,6 +7,9 @@ import com.inditex.prices.infraestructure.database.entity.PricesVO;
 import com.inditex.prices.infraestructure.database.mappers.ProductMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
+
 
 @Service
 public class PricesAdapter implements PricesPort {
@@ -22,9 +25,16 @@ public class PricesAdapter implements PricesPort {
 
     @Override
     public Product getPricesByFilter(ProductQuery priceDTO) {
-        PricesVO pricesQueryResult = getPricesQuery().invoke(priceDTO);
+        List<PricesVO> pricesQueryResult = getPricesQuery().invoke(priceDTO);
 
-        return productMapper.mapToProduct(pricesQueryResult);
+        return getPrices(pricesQueryResult);
+    }
+
+    private Product getPrices(List<PricesVO> pricesResult) {
+       return pricesResult.stream()
+                .max(Comparator.comparing(PricesVO::getPriority))
+                .map(productMapper::mapToProduct)
+                .orElse(null);
     }
 
     private QueryBuilder getPricesQuery() {

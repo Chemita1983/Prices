@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 public interface ProductMapper {
 
     default Product mapToProduct(PricesVO pricesVO) {
+        if(pricesVO == null ) return null;
         return new Product(pricesVO.getProductId(),
                 new Brand(pricesVO.getBrandId(), pricesVO.getBrand().getName()),
                 pricesVO.getStartDate(),

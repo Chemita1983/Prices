@@ -17,8 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -58,7 +56,7 @@ public class PricesAdapterTest {
 
         when(productMapperMock.mapToProduct(any(PricesVO.class))).thenReturn(getProduct());
 
-        when(pricesRepositoryMock.findByPriceDTOWithDates(any(ProductQuery.class))).thenReturn(getPricesVO());
+        when(pricesRepositoryMock.findByPriceDTOWithDates(any(ProductQuery.class))).thenReturn(getPriceVO());
 
         Product productByFilter = pricesAdapter.getPricesByFilter(PRICE_DTO);
 
@@ -77,7 +75,7 @@ public class PricesAdapterTest {
     @Test
     public void givenNullParamProductId_getPricesByService_throwsException() throws ParseException {
 
-        when(pricesRepositoryMock.findByPriceDTOWithDates(any(ProductQuery.class))).thenReturn(getPricesVOProductIdNull());
+        when(pricesRepositoryMock.findByPriceDTOWithDates(any(ProductQuery.class))).thenReturn(getPriceVOProductIdNull());
 
         doThrow(new IllegalArgumentException("productId cannot be null")).when(productMapperMock).mapToProduct(any(PricesVO.class));
 
@@ -90,7 +88,7 @@ public class PricesAdapterTest {
     @Test
     public void givenNullParamBrandId_getPricesByService_throwsException() throws ParseException {
 
-        when(pricesRepositoryMock.findByPriceDTOWithDates(any(ProductQuery.class))).thenReturn(getPricesVOBrandIdNull());
+        when(pricesRepositoryMock.findByPriceDTOWithDates(any(ProductQuery.class))).thenReturn(getPriceVOBrandIdNull());
 
         doThrow(new IllegalArgumentException("brandId cannot be null")).when(productMapperMock).mapToProduct(any(PricesVO.class));
 
@@ -103,7 +101,7 @@ public class PricesAdapterTest {
     @Test
     public void givenBadDatesParams_getPricesByService_throwsException() throws ParseException {
 
-        when(pricesRepositoryMock.findByPriceDTOWithDates(any(ProductQuery.class))).thenReturn(getPricesVOInvalidDates());
+        when(pricesRepositoryMock.findByPriceDTOWithDates(any(ProductQuery.class))).thenReturn(getPriceVOInvalidDates());
 
         doThrow(new IllegalArgumentException("start date must be greater than end date")).when(productMapperMock).mapToProduct(any(PricesVO.class));
 
@@ -113,28 +111,28 @@ public class PricesAdapterTest {
 
     }
 
-    private List<PricesVO> getPricesVO() throws ParseException {
+    private PricesVO getPriceVO() throws ParseException {
 
-        return Collections.singletonList(new PricesVO(35555, 1,  new BrandVO(1, "ZARA"),
-                DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 1,50.0, "EUR"));
+        return new PricesVO(35555, 1,  new BrandVO(1, "ZARA"),
+                DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 1,50.0, "EUR");
     }
 
-    private List<PricesVO> getPricesVOProductIdNull() throws ParseException {
+    private PricesVO getPriceVOProductIdNull() throws ParseException {
 
-        return Collections.singletonList(new PricesVO(null, 1,  new BrandVO(1, "ZARA"),
-                DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 1,50.0, "EUR"));
+        return new PricesVO(null, 1,  new BrandVO(1, "ZARA"),
+                DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 1,50.0, "EUR");
     }
 
-    private List<PricesVO> getPricesVOBrandIdNull() throws ParseException {
+    private PricesVO getPriceVOBrandIdNull() throws ParseException {
 
-        return Collections.singletonList(new PricesVO(35555, null,  new BrandVO(1, "ZARA"),
-                DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 1,50.0, "EUR"));
+        return new PricesVO(35555, null,  new BrandVO(1, "ZARA"),
+                DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 1,50.0, "EUR");
     }
 
-    private List<PricesVO> getPricesVOInvalidDates() throws ParseException {
+    private PricesVO getPriceVOInvalidDates() throws ParseException {
 
-        return Collections.singletonList(new PricesVO(35555, 1,  new BrandVO(1, "ZARA"),
-                DATE_FORMAT.parse("2020-06-18 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 1,50.0, "EUR"));
+        return new PricesVO(35555, 1,  new BrandVO(1, "ZARA"),
+                DATE_FORMAT.parse("2020-06-18 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 1,50.0, "EUR");
     }
 
     private Product getProduct() throws ParseException {

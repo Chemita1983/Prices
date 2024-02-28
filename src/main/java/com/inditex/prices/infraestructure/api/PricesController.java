@@ -45,7 +45,7 @@ public class PricesController {
 
         PriceResponseDTO priceResponseDTO = pricesResponseMapper.mapProductToPriceResponseDTO(productsWithPrices);
 
-        return priceResponseDTO != null ? new ResponseEntity<>(priceResponseDTO, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(priceResponseDTO, HttpStatus.OK);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.inditex.prices.infraestructure.database;
 
+import com.inditex.prices.domain.exception.ProductNotFoundException;
 import com.inditex.prices.domain.model.Product;
 import com.inditex.prices.domain.model.ProductQuery;
 import com.inditex.prices.domain.ports.PricesPort;
@@ -34,7 +35,7 @@ public class PricesAdapter implements PricesPort {
        return pricesResult.stream()
                 .max(Comparator.comparing(PricesVO::getPriority))
                 .map(productMapper::mapToProduct)
-                .orElse(null);
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
     }
 
     private QueryBuilder getPricesQuery() {

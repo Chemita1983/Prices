@@ -228,7 +228,7 @@ public class PricesIntegrationTest {
 
         mvc.perform(MockMvcRequestBuilders
                         .get(testConfigurationProperties.getUri())
-                        .param("productId", "Bad formatZZzz")
+                        .param("productId", "Bad format")
                         .param("brandId", "1")
                         .param("startDate", "2020-06-16 21:00:00")
                         .accept(MediaType.APPLICATION_JSON))

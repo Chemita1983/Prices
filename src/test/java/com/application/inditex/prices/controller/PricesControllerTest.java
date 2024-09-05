@@ -60,7 +60,7 @@ public class PricesControllerTest {
         return new Product(35555, new Brand(1, "ZARA"), DATE_FORMAT.parse("2020-06-14 00:00:00"), DATE_FORMAT.parse("2020-06-15 00:00:00"), 1, 30.50);
     }
 
-    private PriceResponseDTO getReponseForTest() throws ParseException {
+    private PriceResponseDTO getReponseForTest() {
         return new PriceResponseDTO(35555, new BrandResponseDTO(1, "ZARA"), "2020-06-14 00:00:00", "2020-06-15 00:00:00", 1, 30.50);
     }
 }
